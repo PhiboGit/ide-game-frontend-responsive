@@ -2,13 +2,7 @@ import React from 'react'
 import GatheringTile from '../../components/tiles/GatheringTile'
 import { Grid, Typography } from '@mui/material'
 
-type Node = {
-  id: string
-  profession: string
-  tier: number
-}
-
-const gatheringNodes: Node[] = [
+const gatheringNodes: GatheringNode[] = [
   {id: "treeT1", profession: "Woodcutting", tier: 1},
   {id: "treeT2", profession: "Woodcutting", tier: 2},
   {id: "treeT3", profession: "Woodcutting", tier: 3},
@@ -36,7 +30,7 @@ export default function GatheringSection() {
   const groupedNodes = professions.reduce((acc, profession) => {
     acc.set(profession, gatheringNodes.filter(node => node.profession === profession))
     return acc;
-  }, new Map<string, Node[]>());
+  }, new Map<string, GatheringNode[]>());
   
 
   return (
@@ -50,8 +44,7 @@ export default function GatheringSection() {
                 <Grid item key={node.id} xs='auto'>
                   <GatheringTile 
                     size={6} 
-                    profession={node.profession} 
-                    tier={node.tier} 
+                    gatheringNode={node}
                     onClick={() => setSelectedAction(node.id)}
                     selected={selectedAction === node.id}
                   />
