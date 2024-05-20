@@ -101,14 +101,15 @@ export default function NavigationLayout({appbarHeight}: {appbarHeight: number})
       <Box 
         component="main"
         flex={1} // take all space that is not used by nav and side(Character section)
-        sx={{ overflow: 'auto', p: 3,  }}
+        sx={{ overflow: 'auto',  }}
       >
             {mainSection}
       </Box>
       <Divider orientation='vertical'/>
       <Box 
+        // right side only on large screens. else it is with the menu. see NavDrawerMenu
         display= { { xs: 'none', lg: 'block' } }
-        sx={{ overflow: 'auto', p: 3, width: rightSideWidth }}
+        sx={{ overflow: 'auto', width: rightSideWidth }}
       >
         <CharacterSection />
       </Box>

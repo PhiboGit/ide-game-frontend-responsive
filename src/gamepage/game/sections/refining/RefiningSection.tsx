@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function RefiningSection() {
   return (
-    <div>
+    <div style={{ padding: "1rem" }}>
       <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
