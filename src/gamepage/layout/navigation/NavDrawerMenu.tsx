@@ -114,20 +114,7 @@ export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle
             </ListItemButtonMini>
           </ListItem>
         ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mails', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButtonMini miniOpen={miniOpen} >
-              <ListItemIconMini miniOpen={miniOpen}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIconMini>
-              <ListItemTextMini miniOpen={miniOpen} primary={text} />
-            </ListItemButtonMini>
-          </ListItem>
-        ))}
-      </List>
+      </List>      
       <Divider sx={{ mt: 'auto'}} />
       <List>
 
