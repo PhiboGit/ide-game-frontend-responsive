@@ -22,7 +22,7 @@ export default function ActionProgress() {
   const [timeLeft, setTimeLeft] = useState<number>(totalTime);
 
   const handleStartButtonClick = () => {
-    setTotalTime((prev) => prev + 1000);
+    setTotalTime((prev) => prev ? prev  * 2 : 1000 );
   };
 
   const cancelTimer = () => {
