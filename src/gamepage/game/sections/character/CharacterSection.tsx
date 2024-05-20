@@ -4,6 +4,9 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import InventorySection from './inventory/InventorySection';
+import EquipmentSection from './equipment/EquipmentSection';
+import CharacterStatsSection from './stats/CharacterStatsSection';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -23,9 +26,9 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <div>
           {children}
-        </Box>
+        </div>
       )}
     </div>
   );
@@ -73,13 +76,13 @@ export default function CharacterSection() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <InventorySection />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <EquipmentSection />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <CharacterStatsSection />
       </CustomTabPanel>
     </Box>
   );
