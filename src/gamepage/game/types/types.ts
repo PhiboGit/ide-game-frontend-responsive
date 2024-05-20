@@ -1,0 +1,1 @@
+type Rarity = "none" | "common" | "uncommon" | "rare" | "epic" | "legendary";
