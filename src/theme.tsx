@@ -1,5 +1,25 @@
 import { alpha, createTheme } from '@mui/material/styles';
 
+
+// Augment the palette to include an rarity color
+declare module '@mui/material/styles' {
+  interface Palette {
+    commonRarity: Palette['primary'];
+    uncommonRarity: Palette['primary'];
+    rareRarity: Palette['primary'];
+    epicRarity: Palette['primary'];
+    legendaryRarity: Palette['primary'];
+  }
+
+  interface PaletteOptions {
+    commonRarity?: PaletteOptions['primary'];
+    uncommonRarity?: PaletteOptions['primary'];
+    rareRarity?: PaletteOptions['primary'];
+    epicRarity?: PaletteOptions['primary'];
+    legendaryRarity?: PaletteOptions['primary'];
+  }
+}
+
 // A custom theme for this app
 const themePalette = createTheme({
     palette: {
@@ -16,6 +36,24 @@ const themePalette = createTheme({
       paper: "#33333d",
 
     },
+
+    commonRarity: {
+      main: "#b0b0b0",
+    },
+    uncommonRarity: {
+      main: "#4caf50",
+    },
+    rareRarity: {
+      main: "#2196f3",
+    },
+    epicRarity: {
+      main: "#a335ee",
+    },
+    legendaryRarity: {
+      main: "#ff9800",
+    },
+
+    
     
   },
 });
