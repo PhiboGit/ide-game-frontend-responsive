@@ -10,7 +10,9 @@ interface BaseTilePaperProps {
   selected?: boolean
 }
 
-const BaseTilePaper = styled (Paper)<BaseTilePaperProps>(({ theme, size, rarityBorderColor='none', selected = false}) => ({
+const BaseTilePaper = styled (Paper, { 
+  shouldForwardProp: (prop) => prop !== 'size' && prop !== 'rarityBorderColor' && prop !== 'selected' 
+})<BaseTilePaperProps>(({ theme, size, rarityBorderColor='none', selected = false}) => ({
   width:  `${size}rem`,
   height: `${size}rem`,
   position: 'relative', // to let the text be postion absolute
