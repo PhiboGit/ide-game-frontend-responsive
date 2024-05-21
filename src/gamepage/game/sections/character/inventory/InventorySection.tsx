@@ -2,19 +2,19 @@ import { Grid } from '@mui/material';
 import React from 'react'
 import ResourceTile from '../../../components/tiles/ResourceTile';
 import InventoryResourceGridItem from './InventoryResourceGridItem';
-
-const fakeResourceEntries = ['woodT1', 'woodT2', 'woodT3', 'woodT4', 'woodT5', 'error'];
+import useCharacterDataState from '../../../stateManagement/CharacterData/useCharacterData';
 
 export default function InventorySection() {
 
-
+  const resources = useCharacterDataState((char) => char.resources)
+  const characterResources = Object.keys(resources)
 
   return (
     <div style={{ padding: "1rem" }}>
       Inventory
       <Grid container spacing={1}>
-        {fakeResourceEntries.map((key) => (
-          <InventoryResourceGridItem resourceId={key} />   
+        {characterResources.map((key) => (
+          <InventoryResourceGridItem resourceId={key} key={key}/>   
         ))}
       </Grid>
     </div>

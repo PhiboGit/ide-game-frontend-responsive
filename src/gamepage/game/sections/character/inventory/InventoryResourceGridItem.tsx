@@ -3,20 +3,11 @@ import React from "react";
 import ResourceTile from "../../../components/tiles/ResourceTile";
 import ClickAwayPopper from "../../../components/common/ClickAwayPopper";
 import ResourceMenu from "./ResourceMenu";
-
-const fakeInventoryEntries: [string, number][] = [
-  ['woodT1', 10],
-  ['woodT2', 4545],
-  ['woodT3', 0],
-  ['woodT4', 1],
-  ['woodT5', 20],
-  ['false', 20],
-];
-const fakeDataMap: Map<string, number> = new Map(fakeInventoryEntries);
+import useCharacter from "../../../stateManagement/CharacterData/useCharacterData";
 
 export default function InventoryResourceGridItem({ resourceId }: { resourceId: string }) {
 
-  const value = fakeDataMap.get(resourceId) || 0
+  const value = useCharacter((char) => char.resources[resourceId])
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 

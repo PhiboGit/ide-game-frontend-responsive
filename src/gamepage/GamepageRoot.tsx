@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../AuthContextProvider";
 import GamepageLayout from "./layout/GamepageLayout";
+import { GameDataProviderStore } from "./game/stateManagement/GameData/useGameData";
+import { CharacterProviderStore } from "./game/stateManagement/CharacterData/useCharacterData";
 
 
 /**
@@ -19,6 +21,10 @@ export default function GameRoot() {
   }
 
   return (
-    <GamepageLayout />
+    <GameDataProviderStore>
+      <CharacterProviderStore>
+        <GamepageLayout />
+      </CharacterProviderStore>
+    </GameDataProviderStore>
   )
 }
