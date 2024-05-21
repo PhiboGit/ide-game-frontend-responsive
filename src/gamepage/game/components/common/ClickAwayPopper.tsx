@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 interface ClickAwayPopperProps {
   children: React.ReactNode,
-  anchorEl: HTMLElement,
+  anchorEl: HTMLElement | null,
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>
 }
 

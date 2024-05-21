@@ -19,7 +19,8 @@ const BaseTilePaper = styled (Paper, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  outline: rarityBorderColor !== 'none' ? `4px solid ${theme.palette[`${rarityBorderColor}Rarity`].main}` : 'none',
+  outline: rarityBorderColor !== 'none' ? `2px solid ${theme.palette[`${rarityBorderColor}Rarity`].main}` : 'none',
+  outlineOffset: '-2px',
   backgroundColor: selected ? theme.palette.primary.dark : theme.palette.background.paper,
   '&:hover': {
     cursor: 'pointer',
@@ -34,7 +35,7 @@ const BaseTilePaper = styled (Paper, {
 interface BaseTileProps {
   size: number,
   TileIcon?: React.ComponentType<React.ComponentProps<typeof Icon>>,
-  onClick?: (event ?: React.MouseEvent<HTMLElement>) => void,
+  onClick?: (event : React.MouseEvent<HTMLInputElement>) => void,
   tooltipComponent?: JSX.Element,
   rarityBorderColor?: Rarity,
   selected?: boolean,
@@ -45,7 +46,7 @@ export default function BaseTile(
   { size, TileIcon, onClick, tooltipComponent, rarityBorderColor, selected = false, iconSizePercent = 100, children } : BaseTileProps
 ) {
 
-  const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent> | undefined) => {
+  const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
     console.log(`Clicked Icon!`);
     if (onClick) {
       onClick(event);

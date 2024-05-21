@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 interface GatheringTileProps {
   size?: number
   gatheringNode: GatheringNode
-  onClick?: () => void
+  onClick?: (event : React.MouseEvent<HTMLInputElement>) => void
   selected?: boolean
 }
 
@@ -14,9 +14,9 @@ export default function GatheringTile({size = 8, gatheringNode:node, onClick, se
 
 
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
     console.log(`Clicked node!: ${node.id}`);
-    onClick && onClick();
+    onClick && onClick(event);
   }
 
   return (
