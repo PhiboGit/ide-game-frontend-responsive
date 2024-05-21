@@ -20,7 +20,7 @@ const BaseTilePaper = styled (Paper, {
   alignItems: 'center',
   justifyContent: 'center',
   outline: rarityBorderColor !== 'none' ? `2px solid ${theme.palette[`${rarityBorderColor}Rarity`].main}` : 'none',
-  outlineOffset: '-2px',
+  outlineOffset: '-2px', // use an outline to set a border inside the box
   backgroundColor: selected ? theme.palette.primary.dark : theme.palette.background.paper,
   '&:hover': {
     cursor: 'pointer',
