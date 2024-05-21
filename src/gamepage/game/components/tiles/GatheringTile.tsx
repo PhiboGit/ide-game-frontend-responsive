@@ -15,6 +15,7 @@ export default function GatheringTile({size = 8, gatheringNode:node, onClick, se
 
 
   const handleClick = () => {
+    console.log(`Clicked node!: ${node.id}`);
     onClick && onClick();
   }
 
