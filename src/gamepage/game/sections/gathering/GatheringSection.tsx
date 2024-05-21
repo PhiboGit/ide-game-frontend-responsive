@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GatheringTile from '../../components/tiles/GatheringTile'
 import { Grid, Typography } from '@mui/material'
+import StartActionController from '../../components/actions/StartActionController';
 
 const gatheringNodes: GatheringNode[] = [
   {id: "treeT1", profession: "Woodcutting", tier: 1},
@@ -23,7 +24,15 @@ const gatheringNodes: GatheringNode[] = [
 ]
 
 export default function GatheringSection() {
-  const [selectedAction, setSelectedAction] = React.useState("");
+  const [selectedAction, setSelectedAction] = useState("");
+  const [limit, setLimit] = useState(false);
+  const [iterations, setIterations] = useState(1);
+
+  const handleStartClick = () => {
+    
+  };
+
+
 
   const professions = ["Woodcutting", "Gathering", "Mining"];
 
@@ -43,7 +52,7 @@ export default function GatheringSection() {
               {nodes.map(node => 
                 <Grid item key={node.id} xs='auto'>
                   <GatheringTile 
-                    size={6} 
+                    size={8} 
                     gatheringNode={node}
                     onClick={() => setSelectedAction(node.id)}
                     selected={selectedAction === node.id}
@@ -53,6 +62,16 @@ export default function GatheringSection() {
             </Grid>
           </div>
           ))}
+      </div>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+        <StartActionController 
+          limit={limit}
+          setLimit={setLimit}
+          iterations={iterations}
+          setIterations={setIterations}
+          startDisabled={selectedAction === ""}
+          onClickStart={handleStartClick}
+        />        
       </div>
     </div>
   )
