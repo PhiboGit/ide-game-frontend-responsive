@@ -13,7 +13,9 @@ export default function createPartialContextStore<T>(initialData: T){
     const get = useCallback(() => store.current,[])
   
     const set = (updater: (data: T) => Partial<T>) => {
+      // TODO: nested objects
       store.current = {...store.current, ...updater(store.current)}
+      subscribers.current.forEach((callback) => callback());
     }
 
     const subscribers = useRef(new Set<() => void>())
@@ -44,7 +46,8 @@ export default function createPartialContextStore<T>(initialData: T){
     // trigger a re-render when the state changes
     const state = useSyncExternalStore(
       context.subscribe,
-      () => selector(context.get()) // this allows to only sub to a part of the store
+      () => selector(context.get()), // this allows to only sub to a part of the store
+      () => selector(context.get())
     )
 
     return [state, context.set]
