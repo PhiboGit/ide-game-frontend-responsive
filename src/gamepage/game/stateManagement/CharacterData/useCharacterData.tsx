@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import createPartialContextStore from '../createPartialContextStore';
 
-type CharacterResources = {
-  [key: string]: number
-}
+type ResourceIdString = "woodT1" | "woodT2" | "woodT3" | "woodT4" | "woodT5" | "oreT1" | "oreT2" | "oreT3" | "oreT4" | "oreT5"
+
+type Resources = Record<ResourceIdString, number>
 
 type CharacterData = {
   characterName: string,
   level: number,
   exp: number,
-  resources: CharacterResources
+  resources: Resources
 }
 
 const fakeCharacter: CharacterData = {
@@ -54,16 +54,24 @@ function CharacterUpdater() {
 
 
   function simulateWoodcutting() {
+    setCharacterData((prevChar) => (
+      { resources: { ['woodT1']: prevChar.resources.woodT1 + 1 } }
+    ))
+  }
+  
+  function simulateExp(){
     setCharacterData((prevChar) => {
-      const char = {...prevChar}
-      char.resources['woodT1'] = char.resources['woodT1'] + 1
-      console.log("character updated:", char)
-      return char
+      return { level: prevChar.level + 1 }
     })
   }
 
   useEffect(() => {
     const interval = setInterval(simulateWoodcutting, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(simulateExp, 7000)
     return () => clearInterval(interval)
   }, [])
 
