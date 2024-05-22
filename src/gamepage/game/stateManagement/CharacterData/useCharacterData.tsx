@@ -9,7 +9,8 @@ type CharacterData = {
   characterName: string,
   level: number,
   exp: number,
-  resources: Resources
+  resources: Resources,
+  items: string[]
 }
 
 const fakeCharacter: CharacterData = {
@@ -27,7 +28,8 @@ const fakeCharacter: CharacterData = {
     oreT3: 0,
     oreT4: 40,
     oreT5: 0,
-  }
+  },
+  items: ["id_1", "id_2", "id_3"],
 }
 
 
@@ -55,14 +57,17 @@ function CharacterUpdater() {
 
   function simulateWoodcutting() {
     setCharacterData((prevChar) => (
-      { resources: { ['woodT1']: prevChar.resources.woodT1 + 1 } }
+      { 
+        resources: { ...prevChar.resources, ['woodT1']: prevChar.resources.woodT1 + 1 },
+        items: [...prevChar.items, `item_${prevChar.items.length + 1}`]
+      }
     ))
   }
   
   function simulateExp(){
-    setCharacterData((prevChar) => {
-      return { level: prevChar.level + 1 }
-    })
+    setCharacterData((prevChar) => ({
+        level: prevChar.level + 1,
+    }))
   }
 
   useEffect(() => {

@@ -4,10 +4,12 @@ export default function createPartialContextStore<T>(initialData: T){
 
   //utility function to merge partital objects deeply
   function mergeDeep<T>(target: T, source: DeepPartial<T>): T {
-    // make sure it is a record object with a key: value
-    // this "might" still work with an array, which is also of type object.
+    // Make sure it is a record object with a key: value.
+    // Have to execlude arrays as they are objects and
+    // and we cannot otherwise observe the changes to the array itself, eg. adding or removing items.
+    // just reasign the array as a new array/ or spread, like normaly to get a state update
     function isObject(obj: any): obj is Record<string, any>{
-      return obj && typeof obj === 'object';
+      return obj && typeof obj === 'object' && !Array.isArray(obj);
     } 
 
     for (const key in source){
