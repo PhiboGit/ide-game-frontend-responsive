@@ -5,6 +5,7 @@ export default function createPartialContextStore<T>(initialData: T){
   //utility function to merge partital objects deeply
   function mergeDeep<T>(target: T, source: DeepPartial<T>): T {
     // make sure it is a record object with a key: value
+    // this "might" still work with an array, which is also of type object.
     function isObject(obj: any): obj is Record<string, any>{
       return obj && typeof obj === 'object';
     } 
@@ -20,8 +21,17 @@ export default function createPartialContextStore<T>(initialData: T){
     return target
   }
 
+  /**  
+   * Recursive Partial Type
+   * Patial<T> = { [P in keyof T]?: T[P] | undefined } as defined by TypeScript.
+   * A definition for array might be: 
+   * type DeepPartial<T> = { [P in keyof T]?: T[P] extends (infer U)[] extends object ? DeepPartial<U>[]  ? DeepPartial<T[P]> : T[P] };
+  */
   type DeepPartial<T> = {
-    [P in keyof T]?: T[P] extends (infer U)[] ? DeepPartial<U>[] : T[P] extends object ? DeepPartial<T[P]> : T[P];
+    [P in keyof T]?: 
+    T[P] extends object
+      ? DeepPartial<T[P]> 
+      : T[P];
   };
 
   function useStoreData() :{
