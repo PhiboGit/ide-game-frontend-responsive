@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import createPartialContextStore from '../createPartialContextStore';
 
 type CharacterResources = {
@@ -52,6 +52,20 @@ function CharacterUpdater() {
 
   const [characterData, setCharacterData] = useCharacter((char) => char)
 
+
+  function simulateWoodcutting() {
+    setCharacterData((prevChar) => {
+      const char = {...prevChar}
+      char.resources['woodT1'] = char.resources['woodT1'] + 1
+      console.log("character updated:", char)
+      return char
+    })
+  }
+
+  useEffect(() => {
+    const interval = setInterval(simulateWoodcutting, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   return <></>
 }
