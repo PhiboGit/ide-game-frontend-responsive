@@ -7,7 +7,7 @@ import useCharacterDataState from '../../../stateManagement/CharacterData/useCha
 export default function InventorySection() {
 
   const resources = useCharacterDataState((char) => char.resources)
-  const characterResources = Object.keys(resources)
+  const characterResources = Object.keys(resources) as ResourceIdString[]
 
   return (
     <div style={{ padding: "1rem" }}>

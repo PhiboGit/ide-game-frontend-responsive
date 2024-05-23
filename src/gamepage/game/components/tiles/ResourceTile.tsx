@@ -6,7 +6,7 @@ import useGameData from "../../stateManagement/GameData/useGameData";
 
 interface ResourceTileProps {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
-  resourceId: string
+  resourceId: ResourceIdString
   count: number
 }
 
@@ -27,7 +27,7 @@ export default function ResourceTile({ onClick, resourceId, count = 0}: Resource
       size={3.5}
       iconSizePercent={45}
       onClick={handleClick}
-      tooltipComponent={<Typography>{resourceId}</Typography>}
+      tooltipComponent={<Typography>{resource.displayName}</Typography>}
       rarityBorderColor={resource.rarity}
     >
       <Typography 

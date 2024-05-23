@@ -5,7 +5,7 @@ import ClickAwayPopper from "../../../components/common/ClickAwayPopper";
 import ResourceMenu from "./ResourceMenu";
 import useCharacter from "../../../stateManagement/CharacterData/useCharacterData";
 
-export default function InventoryResourceGridItem({ resourceId }: { resourceId: string }) {
+export default function InventoryResourceGridItem({ resourceId }: { resourceId: ResourceIdString }) {
 
   const value = useCharacter((char) => char.resources[resourceId])
 
