@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { Box, LinearProgress } from '@mui/material';
 import ActionProgress from '../../game/components/actions/ActionProgress';
+import CharacterName from '../../game/components/stats/CharacterName';
+import LevelCharacter from '../../game/components/stats/LevelCharacter';
 
 
 
@@ -20,8 +22,8 @@ export default function NavToolbar() {
         </Box>
         <Box display="flex" flexDirection={"column"} sx={{ display: { xs: "none", sm: "block"} }}>
           <Typography noWrap variant='body2'>Active Player: 3381</Typography>
-          <Typography noWrap variant='body2'>Phibo</Typography>
-          <Typography noWrap variant='body2'>Total Level: 3381</Typography>
+          <CharacterName />
+          <LevelCharacter />
         </Box>
     </Toolbar>
   )

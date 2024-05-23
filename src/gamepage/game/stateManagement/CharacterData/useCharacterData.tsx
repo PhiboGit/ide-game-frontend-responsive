@@ -59,7 +59,7 @@ function CharacterUpdater() {
     setCharacterData((prevChar) => (
       { 
         resources: { ...prevChar.resources, ['woodT1']: prevChar.resources.woodT1 + 1 },
-        items: [...prevChar.items, `item_${prevChar.items.length + 1}`]
+        exp: prevChar.exp + 1
       }
     ))
   }
