@@ -2,20 +2,23 @@ import React from "react";
 
 import BaseTile from "./BaseTile";
 import { Typography } from "@mui/material";
+import useGameData from "../../stateManagement/GameData/useGameData";
+import GatheringNodeTooltip from "../tooltips/GatheringNodeTooltip";
 
 interface GatheringTileProps {
   size?: number
-  gatheringNode: GatheringNode
+  nodeId: GatheringNodeId
   onClick?: (event : React.MouseEvent<HTMLInputElement>) => void
   selected?: boolean
 }
 
-export default function GatheringTile({size = 8, gatheringNode:node, onClick, selected}: GatheringTileProps) {
+export default function GatheringTile({size = 8, nodeId, onClick, selected}: GatheringTileProps) {
 
+  const node = useGameData((data) => data.gatheringNodeData[nodeId])
 
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    console.log(`Clicked node!: ${node.id}`);
+    console.log(`Clicked node!: ${nodeId}`);
     onClick && onClick(event);
   }
 
@@ -25,7 +28,7 @@ export default function GatheringTile({size = 8, gatheringNode:node, onClick, se
       iconSizePercent={65}
       onClick={handleClick}
       selected={selected}
-      tooltipComponent={<Typography>{node.id}</Typography>}
+      tooltipComponent={<GatheringNodeTooltip nodeId={nodeId}/>}
     >
       <Typography variant="body2" textAlign='center' sx={{ position: 'absolute', bottom: 0, right: 0, width: '100%', padding: '0.05rem 0.2rem'}}>
           {node.profession}

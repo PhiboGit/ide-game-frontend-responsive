@@ -1,30 +1,13 @@
 import React, { useState } from 'react'
-import GatheringTile from '../../components/tiles/GatheringTile'
+import GatheringTile from '../../components/tiles/GatheringNodeTile'
 import { Grid, Typography } from '@mui/material'
 import StartActionController from '../../components/actions/StartActionController';
-
-const gatheringNodes: GatheringNode[] = [
-  {id: "treeT1", profession: "Woodcutting", tier: 1},
-  {id: "treeT2", profession: "Woodcutting", tier: 2},
-  {id: "treeT3", profession: "Woodcutting", tier: 3},
-  {id: "treeT4", profession: "Woodcutting", tier: 4},
-  {id: "treeT5", profession: "Woodcutting", tier: 5},
-
-  {id: "plantT1", profession: "Gathering", tier: 1},
-  {id: "plantT2", profession: "Gathering", tier: 2},
-  {id: "plantT3", profession: "Gathering", tier: 3},
-  {id: "plantT4", profession: "Gathering", tier: 4},
-  {id: "plantT5", profession: "Gathering", tier: 5},
- 
-  {id: "veinT1", profession: "Mining", tier: 1},
-  {id: "veinT2", profession: "Mining", tier: 2},
-  {id: "veinT3", profession: "Mining", tier: 3},
-  {id: "veinT4", profession: "Mining", tier: 4},
-  {id: "veinT5", profession: "Mining", tier: 5},
-]
+import useGameDataState from '../../stateManagement/GameData/useGameData';
 
 export default function GatheringSection() {
-  const [selectedAction, setSelectedAction] = useState("");
+  const nodeData = useGameDataState(state => state.gatheringNodeData);
+
+  const [selectedAction, setSelectedAction] = useState<GatheringNodeId | null>(null);
   const [limit, setLimit] = useState(false);
   const [iterations, setIterations] = useState(1);
 
@@ -33,13 +16,15 @@ export default function GatheringSection() {
   };
 
 
+  const groupedNodes = new Map<Profession, GatheringNodeId[]>();
 
-  const professions = ["Woodcutting", "Gathering", "Mining"];
-
-  const groupedNodes = professions.reduce((acc, profession) => {
-    acc.set(profession, gatheringNodes.filter(node => node.profession === profession))
-    return acc;
-  }, new Map<string, GatheringNode[]>());
+  Object.entries(nodeData).forEach(([nodeId, node]) => {
+    if (!groupedNodes.has(node.profession)) {
+      groupedNodes.set(node.profession, []);
+    }
+    groupedNodes.get(node.profession)?.push(nodeId as GatheringNodeId);
+  })
+ 
   
 
   return (
@@ -49,13 +34,13 @@ export default function GatheringSection() {
           <div key={profession}  >
             <Typography variant="h4">{profession}</Typography>
             <Grid container spacing={2}>
-              {nodes.map(node => 
-                <Grid item key={node.id} xs='auto'>
+              {nodes.map(nodeId => 
+                <Grid item key={nodeId} xs='auto'>
                   <GatheringTile 
                     size={8} 
-                    gatheringNode={node}
-                    onClick={() => setSelectedAction(node.id)}
-                    selected={selectedAction === node.id}
+                    nodeId={nodeId}
+                    onClick={() => setSelectedAction(nodeId)}
+                    selected={selectedAction === nodeId}
                   />
                 </Grid>
               )}
@@ -69,7 +54,7 @@ export default function GatheringSection() {
           setLimit={setLimit}
           iterations={iterations}
           setIterations={setIterations}
-          startDisabled={selectedAction === ""}
+          startDisabled={selectedAction === null}
           onClickStart={handleStartClick}
         />        
       </div>
