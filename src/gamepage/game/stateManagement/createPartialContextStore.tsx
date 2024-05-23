@@ -26,8 +26,6 @@ export default function createPartialContextStore<T>(initialData: T){
   /**  
    * Recursive Partial Type
    * Patial<T> = { [P in keyof T]?: T[P] | undefined } as defined by TypeScript.
-   * A definition for array might be: 
-   * type DeepPartial<T> = { [P in keyof T]?: T[P] extends (infer U)[] extends object ? DeepPartial<U>[]  ? DeepPartial<T[P]> : T[P] };
   */
   type DeepPartial<T> = {
     [P in keyof T]?: 
