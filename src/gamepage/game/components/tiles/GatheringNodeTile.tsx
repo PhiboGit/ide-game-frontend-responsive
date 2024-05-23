@@ -30,12 +30,12 @@ export default function GatheringTile({size = 8, nodeId, onClick, selected}: Gat
       selected={selected}
       tooltipComponent={<GatheringNodeTooltip nodeId={nodeId}/>}
     >
+      <Typography variant="body2" textAlign='center' sx={{ position: 'absolute', top: 0, left: 0, width: '100%', padding: '0.05rem 0.2rem'}}>
+        {node.displayName}
+      </Typography>
       <Typography variant="body2" textAlign='center' sx={{ position: 'absolute', bottom: 0, right: 0, width: '100%', padding: '0.05rem 0.2rem'}}>
-          {node.profession}
-        </Typography>
-        <Typography variant="body2" textAlign='center' sx={{ position: 'absolute', top: 0, left: 0, width: '100%', padding: '0.05rem 0.2rem'}}>
-          {node.id}
-        </Typography>
+        {node.profession}
+      </Typography>
     </BaseTile>
 );
 }

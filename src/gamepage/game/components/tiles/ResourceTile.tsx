@@ -3,10 +3,11 @@ import React from "react";
 import BaseTile from "./BaseTile";
 import { Typography } from "@mui/material";
 import useGameData from "../../stateManagement/GameData/useGameData";
+import ResourceTooltip from "../tooltips/ResourceTooltip";
 
 interface ResourceTileProps {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
-  resourceId: ResourceIdString
+  resourceId: ResourceId
   count: number
 }
 
@@ -27,7 +28,7 @@ export default function ResourceTile({ onClick, resourceId, count = 0}: Resource
       size={3.5}
       iconSizePercent={45}
       onClick={handleClick}
-      tooltipComponent={<Typography>{resource.displayName}</Typography>}
+      tooltipComponent={<ResourceTooltip resourceId={resourceId}/>}
       rarityBorderColor={resource.rarity}
     >
       <Typography 
