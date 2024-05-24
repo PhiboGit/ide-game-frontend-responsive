@@ -1,34 +1,56 @@
 
-interface ResourceInfo  {
+
+type ResourceInfo = {
   id: ResourceId
   displayName: string
+  description: string
+  tier: number
   rarity: Rarity
 }
 
-type ResourceData = {
-  [key in ResourceId]: ResourceInfo;
-};
+type BonusType = 
+  'exp' | 'luck' | 'maxYield' | 'speed' |
+  'harvesting_exp' | 'harvesting_luck' | 'harvesting_maxYield' | 'harvesting_speed' | 
+  'mining_exp' | 'mining_luck' | 'mining_maxYield' | 'mining_speed' | 
+  'woodcutting_exp' | 'woodcutting_luck' | 'woodcutting_maxYield' | 'woodcutting_speed'
+
+
+interface CraftingResource extends ResourceInfo {
+  
+  bonusType?: BonusType
+  craftingBonus?: number
+  gearScoreBonus?: number
+}
+
+type EquipmentSlot = 'head' | 'chest' | 'arms' | 'waist' | 'legs' | 'feet'
+interface ItemResource extends ResourceInfo {
+  
+  professions: Profession[]
+  equipmentSlot: EquipmentSlot
+}
+
+type ResourceData = Record<ResourceId, ResourceInfo>
 const fakeResourceDataObject: ResourceData  = {
-  'woodT2': { id: 'woodT2', displayName: 'Oak Wood', rarity: 'none' },
-  'woodT1': { id: 'woodT1', displayName: 'Birch Wood', rarity: 'none' },
-  'woodT3': { id: 'woodT3', displayName: 'Elderwood', rarity: 'none' },
-  'woodT4': { id: 'woodT4', displayName: 'Giant Wood', rarity: 'none' },
-  'woodT5': { id: 'woodT4', displayName: 'Willow Wood', rarity: 'none' },
+  'woodT1': { id: 'woodT1', displayName: 'Birch Wood', description: '', rarity: 'none', tier: 1 },
+  'woodT2': { id: 'woodT2', displayName: 'Oak Wood', description: '', rarity: 'none', tier: 2 },
+  'woodT3': { id: 'woodT3', displayName: 'Elderwood', description: '', rarity: 'none', tier: 3 },
+  'woodT4': { id: 'woodT4', displayName: 'Giant Wood', description: '', rarity: 'none', tier: 4 },
+  'woodT5': { id: 'woodT5', displayName: 'Willow Wood', description: '', rarity: 'none', tier: 5 },
 
-  'oreT1': { id: 'oreT1', displayName: 'Copper Ore', rarity: 'none' },
-  'oreT2': { id: 'oreT2', displayName: 'Iron Ore', rarity: 'none' },
-  'oreT3': { id: 'oreT3', displayName: 'Gold Ore', rarity: 'rare' },
-  'oreT4': { id: 'oreT4', displayName: 'Mithril Ore', rarity: 'none' },
-  'oreT5': { id: 'oreT4', displayName: 'Platinum Ore', rarity: 'none' },
+  'oreT1': { id: 'oreT1', displayName: 'Copper Ore', description: '', rarity: 'none', tier: 1 },
+  'oreT2': { id: 'oreT2', displayName: 'Iron Ore', description: '', rarity: 'none', tier: 2 },
+  'oreT3': { id: 'oreT3', displayName: 'Gold Ore', description: '', rarity: 'rare', tier: 3 },
+  'oreT4': { id: 'oreT4', displayName: 'Mithril Ore', description: '', rarity: 'none', tier: 4 },
+  'oreT5': { id: 'oreT4', displayName: 'Platinum Ore', description: '', rarity: 'none', tier: 5 },
 
-  'fiberT1': { id: 'fiberT1', displayName: 'Hemp Fiber', rarity: 'none' },
-  'fiberT2': { id: 'fiberT2', displayName: 'Cotton Fiber', rarity: 'none' },
-  'fiberT3': { id: 'fiberT3', displayName: 'Flower Fiber', rarity: 'none' },
-  'fiberT4': { id: 'fiberT4', displayName: 'Bamboo Fiber', rarity: 'none' },
-  'fiberT5': { id: 'fiberT4', displayName: 'Flax Fiber', rarity: 'none' },
+  'fiberT1': { id: 'fiberT1', displayName: 'Hemp Fiber', description: '', rarity: 'none', tier: 1 },
+  'fiberT2': { id: 'fiberT2', displayName: 'Cotton Fiber', description: '', rarity: 'none', tier: 2 },
+  'fiberT3': { id: 'fiberT3', displayName: 'Flower Fiber', description: '', rarity: 'none', tier: 3 },
+  'fiberT4': { id: 'fiberT4', displayName: 'Bamboo Fiber', description: '', rarity: 'none', tier: 4 },
+  'fiberT5': { id: 'fiberT4', displayName: 'Flax Fiber', description: '', rarity: 'none' , tier: 5 },
 };
 
-interface GatheringNodeInfo  {
+type GatheringNodeInfo = {
   id: GatheringNodeId
   displayName: string
   description: string
@@ -69,6 +91,13 @@ const fakeGatheringNodeDataObject: GatheringNodeData  = {
   'PlantT4': { id: 'PlantT4', displayName: 'Bamboo', description: '', profession: 'Harvesting', tier: 4, level: 0, time: 10000, exp: 10, resource: 'fiberT4', minAmount: 1, maxAmount: 5  },
   'PlantT5': { id: 'PlantT5', displayName: 'Flax', description: '', profession: 'Harvesting', tier: 5, level: 0, time: 10000, exp: 10, resource: 'fiberT5', minAmount: 1, maxAmount: 5  },
 };
+
+type CraftingItem = {
+  itemId: string
+
+}
+
+
 
 
 export const fakeGameData = {
