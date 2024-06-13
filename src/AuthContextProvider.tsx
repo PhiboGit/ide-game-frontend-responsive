@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState } from "react"
+import authService from "./service/authService";
 
 type Auth = {
   isLoggedIn: boolean;
-  login: () => void;
+  register: (character: string, username: string, password: string) => void;
+  login: (username: string, password: string) => void;
   logout: () => void;
 }
 
@@ -18,19 +20,23 @@ export function useAuth() {
 
 export default function AuthContextProvider({ children }: { children: React.ReactNode }) {
   
-  const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('token') === 'mytoken');
+  const [isLoggedIn, setIsLoggedIn] = useState(() => authService.isAuthenticated());
 
-  function login() {
-    localStorage.setItem('token', 'mytoken');
+  async function register(character: string, username: string, password: string) {
+    await authService.register(character, username, password);
+  }
+
+  async function login(username: string, password: string) {
+    await authService.login(username, password);
     setIsLoggedIn(true);
   }
 
-  function logout() {
-    localStorage.removeItem('token');
+  async function logout() {
+    await authService.logout();
     setIsLoggedIn(false);
   }
 
-  const value: Auth = {isLoggedIn, login, logout}
+  const value: Auth = {isLoggedIn, register, login, logout}
 
   return (
     <authContext.Provider value={value}>
