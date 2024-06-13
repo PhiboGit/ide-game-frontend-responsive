@@ -75,7 +75,6 @@ export function LogoutButton(){
 }
 
 function WelcomePlayLogout() {
-  const {logout} = useAuth()
   const navigate = useNavigate();
 
   function play(){
