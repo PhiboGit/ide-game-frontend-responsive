@@ -1,13 +1,10 @@
 import { JTDSchemaType } from "ajv/dist/jtd.js";
 import { ajv } from "../ajvInstance.js";
+import { InitStatusMessage } from "../../../game/gameTypes.js";
 
 
 // TODO: validate time as a date
-export type InitStatusMessage = {
-  type: 'init_status',
-  active_players: number,
-  time: string
-}
+
 
 const schemaInitStatus: JTDSchemaType<InitStatusMessage> = {
   properties: {

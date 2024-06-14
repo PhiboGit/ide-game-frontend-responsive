@@ -1,10 +1,28 @@
 import React from 'react';
 import createPartialContextStore from '../createPartialContextStore';
-import { fakeGameData } from './fakeGameData';
+import messageManager from '../../../messages/messageManager';
+import { InitGameMessage } from '../../gameTypes';
 
-const { StoreProvider: GameDataProvider, useStore: useGameData } = createPartialContextStore(fakeGameData)
+
+
+let  GameDataProvider: typeof StoreProvider;
+let  useGameData: typeof useStore;
+
+// to type inference. This data might still be null
+const { StoreProvider, useStore } = createPartialContextStore(messageManager.getInitData().initGameMessage!)
+
+// this data should never be null if used correctly.
+// The provider should be contitionally rendered after the messageManager has all initData messages received.
+function initialize() {
+  const { StoreProvider, useStore } = createPartialContextStore(messageManager.getInitData().initGameMessage!)
+
+  GameDataProvider = StoreProvider
+  useGameData = useStore
+}
 
 export function GameDataProviderStore({children}: {children: React.ReactNode}) {
+  initialize()
+
   return (
     <GameDataProvider>
       <GameDataUpdater />
@@ -30,7 +48,7 @@ function GameDataUpdater() {
 // New hook that only returns the state
 // Just to be save to only change the state here, eg. over websocket
 export default function useGameDataState<SelectorOutput>(
-  selector: (store: typeof fakeGameData) => SelectorOutput
+  selector: (store: InitGameMessage) => SelectorOutput
 ): SelectorOutput {
   const [state] = useGameData(selector);
   if (state === undefined) {

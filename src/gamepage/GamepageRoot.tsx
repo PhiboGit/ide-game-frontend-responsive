@@ -16,21 +16,20 @@ import messageManager from "./messages/messageManager";
  * 
  * 
  */
-export default function GameRoot() {
+export default function GamepageRoot() {
   const { isLoggedIn } = useAuth()
-  const [websocketState, setWebsocketState] = useState('closed')
-
-  const connected = websocketState === 'open'
-
   if (!isLoggedIn) {
     return <Navigate to="/" />
   }
 
+  const [websocketState, setWebsocketState] = useState('closed')
+  const connected = websocketState === 'open'
+
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const connect = () => {
-      websocketService.connect(
-        setWebsocketState,
-        onMessage)
+      websocketService.connect(setWebsocketState)
     }
     connect()
     return () => {
@@ -38,18 +37,31 @@ export default function GameRoot() {
     }
   }, [])
 
-  function onMessage(message: any) {
-    messageManager.onMessage(message)
-  }
+  useEffect(() => {
+    const unsubscribe = messageManager.subscribeInit((data) => {
+      console.log('All init messages received:', data);
+      setLoading(false);
+      unsubscribe()
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
-    <GameDataProviderStore>
-        <CharacterProviderStore>
-          {connected ? 
+    connected ? (
+      loading ? (
+        <div>Loading...</div>
+      ) : (
+        <GameDataProviderStore>
+          <CharacterProviderStore>
             <GamepageLayout />
-          : <div>Not connected!</div>
-          }
-        </CharacterProviderStore>
-      </GameDataProviderStore>
-  )
+          </CharacterProviderStore>
+        </GameDataProviderStore>
+      )
+    ) : (
+      <div>Not connected!</div>
+    )
+  );
 }

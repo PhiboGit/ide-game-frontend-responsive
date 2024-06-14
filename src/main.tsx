@@ -13,13 +13,13 @@ import {
  } from 'react-router-dom';
 
 import HomePage from './homepage/HomePage';
-import GameRoot from './gamepage/GamepageRoot';
+import GamepageRoot from './gamepage/GamepageRoot';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<HomePage />} />
-      <Route path="game" element={<GameRoot />} />
+      <Route path="game" element={<GamepageRoot />} />
       <Route path="*" element={<HomePage />} />
     </Route>
   )

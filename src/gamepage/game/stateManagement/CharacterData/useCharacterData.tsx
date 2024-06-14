@@ -1,11 +1,27 @@
 import React, { useEffect } from 'react';
 import createPartialContextStore from '../createPartialContextStore';
-import { fakeCharacter } from './fakeCharacterData';
+import messageManager from '../../../messages/messageManager';
+import { Character, UpdateCharacterMessage } from '../../gameTypes';
+import { validateUpdateCharacterMessage } from '../../../messages/validation/messageValidation/updateCharacterMessage';
 
+let  CharacterProvider: typeof StoreProvider;
+let  useCharacter: typeof useStore;
 
-const { StoreProvider: CharacterProvider, useStore: useCharacter } = createPartialContextStore(fakeCharacter)
+// to type inference. This data might still be null
+let mockCharacter: Character 
+const { StoreProvider, useStore } = createPartialContextStore(mockCharacter!)
+
+// this data should never be null if used correctly.
+// The provider should be contitionally rendered after the messageManager has all initData messages received.
+function initialize() {
+  const { StoreProvider, useStore } = createPartialContextStore(messageManager.getInitData().initCharacterMessage!.character)
+
+  CharacterProvider = StoreProvider
+  useCharacter = useStore
+}
 
 export function CharacterProviderStore({children}: {children: React.ReactNode}) {
+  initialize()
 
   return (
     <CharacterProvider>
@@ -21,34 +37,21 @@ export function CharacterProviderStore({children}: {children: React.ReactNode}) 
  * TODO: add a way to update the character, Websocket listener
  */
 function CharacterUpdater() {
-
   const [characterData, setCharacterData] = useCharacter((char) => char)
 
-
-  function simulateWoodcutting() {
-    setCharacterData((prevChar) => (
-      { 
-        resources: { ...prevChar.resources, ['woodT1']: prevChar.resources.woodT1 + 1 },
-        exp: prevChar.exp + 1
-      }
-    ))
-  }
-  
-  function simulateExp(){
-    setCharacterData((prevChar) => ({
-        level: prevChar.level + 1,
-    }))
-  }
-
   useEffect(() => {
-    const interval = setInterval(simulateWoodcutting, 5000)
-    return () => clearInterval(interval)
-  }, [])
+    const unsubscribe = messageManager.subscribeUpdateCharacter((data) => {
+      console.log('update character messages received:', data);
+      updateCharacter(data)
+    })
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-  useEffect(() => {
-    const interval = setInterval(simulateExp, 7000)
-    return () => clearInterval(interval)
-  }, [])
+  function updateCharacter(updateCharacterMessage: UpdateCharacterMessage) {
+
+  }
 
   return <></>
 }
@@ -56,7 +59,7 @@ function CharacterUpdater() {
 // New hook that only returns the state
 // Just to be save to only change the state here, eg. over websocket
 export default function useCharacterDataState<SelectorOutput>(
-  selector: (store: typeof fakeCharacter) => SelectorOutput
+  selector: (store: Character) => SelectorOutput
 ): SelectorOutput {
   const [state] = useCharacter(selector);
   if (state === undefined) {

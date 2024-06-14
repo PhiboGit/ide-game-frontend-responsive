@@ -1,5 +1,6 @@
 import { JTDDataType } from "ajv/dist/jtd.js";
 import { ajv } from "../ajvInstance.js";
+import { GatheringNodeData } from "../../../game/gameTypes.js";
 
 
 const schemaGatheringNode = {
@@ -27,8 +28,6 @@ const schemaGatheringNode = {
   }
 } as const
 
-export type GatheringNodeData = JTDDataType<typeof schemaGatheringNode>
-export type GatheringNode = GatheringNodeData['values']
 const validate = ajv.compile<GatheringNodeData>(schemaGatheringNode)
 
 export function validateGatheringNodeData (data: any): GatheringNodeData {

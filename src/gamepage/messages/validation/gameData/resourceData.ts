@@ -1,5 +1,6 @@
 import { JTDDataType } from "ajv/dist/jtd.js";
 import { ajv } from "../ajvInstance.js";
+import { ResourceData } from "../../../game/gameTypes.js";
 
 
 
@@ -26,8 +27,7 @@ const schemaResource = {
   }
 } as const
 
-export type ResourceData = JTDDataType<typeof schemaResource>
-export type Resource = ResourceData['values']
+
 const validate = ajv.compile<ResourceData>(schemaResource)
 
 export function validateResourceData(data: any): ResourceData {

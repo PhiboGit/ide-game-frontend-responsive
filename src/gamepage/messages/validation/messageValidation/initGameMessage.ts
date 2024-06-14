@@ -1,11 +1,6 @@
-import { GatheringNodeData, validateGatheringNodeData } from "../gameData/gatheringNodeData"
-import { ResourceData, validateResourceData } from "../gameData/resourceData"
-
-export type InitGameMessage = {
-  type: 'init_game',
-  gatheringNodeData: GatheringNodeData,
-  resourceData: ResourceData
-}
+import { InitGameMessage } from "../../../game/gameTypes"
+import {  validateGatheringNodeData } from "../gameData/gatheringNodeData"
+import {  validateResourceData } from "../gameData/resourceData"
 
 export function validateInitGameMessage(message: any): InitGameMessage {
   if(message && message.type === 'init_game'

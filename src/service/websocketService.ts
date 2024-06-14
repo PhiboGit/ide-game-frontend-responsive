@@ -1,5 +1,7 @@
 // WebSocketService.js
 
+import messageManager from "../gamepage/messages/messageManager";
+
 const serverIP = '192.168.81.169:5000'
 
 
@@ -7,7 +9,7 @@ class WebsocketService {
 
   socket: WebSocket | null = null
   
-  connect(onStateChange: (state: string) => void, onMessage: (message: any) => void) {
+  connect(onStateChange: (state: string) => void) {
     console.log('Connect WebSocket');
     // state closing or closed
     if (!this.socket || this.socket.readyState == 2 || this.socket.readyState == 3) {
@@ -25,7 +27,7 @@ class WebsocketService {
   
       this.socket.onmessage = (event) => {
         
-        onMessage(event.data);
+        messageManager.onMessage(event.data);
       };
   
       this.socket.onclose = (event) => {

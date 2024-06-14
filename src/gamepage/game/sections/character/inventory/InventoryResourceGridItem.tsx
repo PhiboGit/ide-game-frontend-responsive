@@ -4,8 +4,9 @@ import ResourceTile from "../../../components/tiles/ResourceTile";
 import ClickAwayPopper from "../../../components/common/ClickAwayPopper";
 import ResourceMenu from "./ResourceMenu";
 import useCharacter from "../../../stateManagement/CharacterData/useCharacterData";
+import { ResourceId } from "../../../gameTypes";
 
-export default function InventoryResourceGridItem({ resourceId }: { resourceId: ResourceIdString }) {
+export default function InventoryResourceGridItem({ resourceId }: { resourceId: ResourceId }) {
 
   const value = useCharacter((char) => char.resources[resourceId])
 
