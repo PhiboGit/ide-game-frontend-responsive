@@ -286,6 +286,17 @@ export type InitCharacterMessage = {
   character: Character
 }
 
+type UpdateParameters = {
+  characterName: string,
+  resources?: Partial<Resources>,
+  experiences?: Partial<Record<ProfessionId, number>>,
+  expChar?: number,
+  currency?: Partial<Currency>
+  activeAction?: ActionObject | null,
+  actionQueue?: ActionObject[]
+  itemId?: string
+}
 export type UpdateCharacterMessage = {
   type: 'update_character',
+  updateParameters: UpdateParameters
 }

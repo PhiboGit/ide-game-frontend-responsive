@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import createPartialContextStore from '../createPartialContextStore';
 import messageManager from '../../../messages/messageManager';
-import { Character, UpdateCharacterMessage } from '../../gameTypes';
+import { Character, CurrencyId, ProfessionId, ResourceId, UpdateCharacterMessage } from '../../gameTypes';
 import { validateUpdateCharacterMessage } from '../../../messages/validation/messageValidation/updateCharacterMessage';
 
 let  CharacterProvider: typeof StoreProvider;
@@ -32,10 +32,7 @@ export function CharacterProviderStore({children}: {children: React.ReactNode}) 
 }
 
 
-/**
- * 
- * TODO: add a way to update the character, Websocket listener
- */
+
 function CharacterUpdater() {
   const [characterData, setCharacterData] = useCharacter((char) => char)
 
@@ -50,7 +47,83 @@ function CharacterUpdater() {
   }, []);
 
   function updateCharacter(updateCharacterMessage: UpdateCharacterMessage) {
+    const update = updateCharacterMessage.updateParameters
+    
+    if(update.resources !== undefined){
+      Object.entries(update.resources).forEach(([resourceId, amount]) => {
+        setCharacterData((prevChar) => (
+          { 
+            resources: { 
+              ...prevChar.resources, // keep the old resources state
+              [resourceId]: prevChar.resources[resourceId as ResourceId] + amount },
+          }
+        ))
+      })
+    }
 
+    if(update.experiences !== undefined){
+      Object.entries(update.experiences).forEach(([professionId, amount]) => {
+        setCharacterData((prevChar) => (
+          { 
+            professions: { 
+              ...prevChar.professions, // keep the old professions state
+              [professionId]: { 
+                ...prevChar.professions[professionId as ProfessionId], // keep the old profession state
+                exp: prevChar.professions[professionId as ProfessionId].exp + amount // only update the exp
+              }
+            },
+          }
+        ))
+      })
+    }
+
+    if(update.expChar !== undefined){
+      const expChar = update.expChar
+      setCharacterData((prevChar) => (
+        { 
+          expChar: prevChar.expChar + expChar
+        }
+      ))
+    }
+
+    if(update.currency !== undefined){
+      Object.entries(update.currency).forEach(([currencyId, amount]) => {
+        setCharacterData((prevChar) => (
+          { 
+            currency: { 
+              ...prevChar.currency, // keep the old currency state
+              [currencyId]: prevChar.currency[currencyId as CurrencyId] + amount },
+          }
+        ))
+      })
+    }
+
+    if(update.activeAction !== undefined){
+      const activeAction = update.activeAction
+      setCharacterData((prevChar) => (
+        { 
+          activeAction: activeAction
+        }
+      ))
+    }
+
+    if(update.actionQueue !== undefined){
+      const actionQueue = update.actionQueue
+      setCharacterData((prevChar) => (
+        { 
+          actionQueue: actionQueue
+        }
+      ))
+    }
+
+    if(update.itemId !== undefined){
+      const itemId = update.itemId
+      setCharacterData((prevChar) => (
+        { 
+          items: [...prevChar.items, itemId]
+        }
+      ))
+    }
   }
 
   return <></>
