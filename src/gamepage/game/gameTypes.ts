@@ -97,25 +97,6 @@ export type ActionObject = {
 
 export type ActionMsg = GatheringMsg | CraftingMsg
 
-export type GatheringMsg = {
-  type: 'gathering'
-  limit: boolean
-  iterations: number
-  args: {
-    node: string
-  }
-}
-
-export type CraftingMsg = {
-  type: 'crafting_resource' | 'crafting_rarityResource' | 'crafting_item'
-  limit: boolean
-  iterations: number
-  args: {
-    recipe: string
-    ingredients: ResourceId[]
-  }
-}
-
 export type Item = {
   _id: string;
   name: string;
@@ -266,8 +247,7 @@ export type ItemRecipe = {
 export type ItemRecipeData = {[x: string]: ItemRecipe}
 
 
-// messages types
-
+// messages types incoming
 
 export type InitGameMessage = {
   type: 'init_game',
@@ -299,4 +279,25 @@ type UpdateParameters = {
 export type UpdateCharacterMessage = {
   type: 'update_character',
   updateParameters: UpdateParameters
+}
+
+// messages types outgoing
+
+export type GatheringMsg = {
+  type: 'gathering'
+  limit: boolean
+  iterations: number
+  args: {
+    node: string
+  }
+}
+
+export type CraftingMsg = {
+  type: 'crafting_resource' | 'crafting_rarityResource' | 'crafting_item'
+  limit: boolean
+  iterations: number
+  args: {
+    recipe: string
+    ingredients: ResourceId[]
+  }
 }

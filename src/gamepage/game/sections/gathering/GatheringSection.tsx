@@ -3,26 +3,41 @@ import GatheringTile from '../../components/tiles/GatheringNodeTile'
 import { Grid, Typography } from '@mui/material'
 import StartActionController from '../../components/actions/StartActionController';
 import useGameDataState from '../../stateManagement/GameData/useGameData';
+import { GatheringMsg, ProfessionId } from '../../gameTypes';
+import websocketService from '../../../../service/websocketService';
 
 export default function GatheringSection() {
   const nodeData = useGameDataState(state => state.gatheringNodeData);
 
-  const [selectedAction, setSelectedAction] = useState<GatheringNodeId | null>(null);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [limit, setLimit] = useState(false);
   const [iterations, setIterations] = useState(1);
 
   const handleStartClick = () => {
-    
+    if (selectedAction === null) {
+      console.log('no action selected')
+      return
+    }
+    const msg: GatheringMsg = {
+      type: 'gathering',
+      limit,
+      iterations,
+      args: {
+        node: selectedAction
+      }
+    }
+
+    websocketService.send(msg);
   };
 
 
-  const groupedNodes = new Map<Profession, GatheringNodeId[]>();
+  const groupedNodes = new Map<ProfessionId, string[]>();
 
   Object.entries(nodeData).forEach(([nodeId, node]) => {
     if (!groupedNodes.has(node.profession)) {
       groupedNodes.set(node.profession, []);
     }
-    groupedNodes.get(node.profession)?.push(nodeId as GatheringNodeId);
+    groupedNodes.get(node.profession)?.push(nodeId);
   })
  
   
