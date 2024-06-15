@@ -6,6 +6,7 @@ import { GameDataProviderStore } from "./game/stateManagement/GameData/useGameDa
 import { CharacterProviderStore } from "./game/stateManagement/CharacterData/useCharacterData";
 import websocketService from "../service/websocketService";
 import messageManager from "./messages/messageManager";
+import { ServerDataProviderStore } from "./game/stateManagement/serverData/useServerData";
 
 
 /**
@@ -54,11 +55,13 @@ export default function GamepageRoot() {
       loading ? (
         <div>Loading...</div>
       ) : (
-        <GameDataProviderStore>
-          <CharacterProviderStore>
-            <GamepageLayout />
-          </CharacterProviderStore>
-        </GameDataProviderStore>
+        <ServerDataProviderStore>
+          <GameDataProviderStore>
+            <CharacterProviderStore>
+              <GamepageLayout />
+            </CharacterProviderStore>
+          </GameDataProviderStore>
+        </ServerDataProviderStore>
       )
     ) : (
       <div>Not connected!</div>
