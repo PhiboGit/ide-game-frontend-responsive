@@ -7,7 +7,7 @@ import GatheringNodeTooltip from "../tooltips/GatheringNodeTooltip";
 
 interface GatheringTileProps {
   size?: number
-  nodeId: GatheringNodeId
+  nodeId: string
   onClick?: (event : React.MouseEvent<HTMLInputElement>) => void
   selected?: boolean
 }

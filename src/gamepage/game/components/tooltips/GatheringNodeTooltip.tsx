@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import React from "react";
 import useGameData from "../../stateManagement/GameData/useGameData";
 
-export default function GatheringNodeTooltip({nodeId}: {nodeId: GatheringNodeId}) {
+export default function GatheringNodeTooltip({nodeId}: {nodeId: string}) {
     const node = useGameData((data) => data.gatheringNodeData[nodeId])
 
   return (

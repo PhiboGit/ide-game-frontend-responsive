@@ -3,7 +3,7 @@ import React from "react";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
 
 export default function LevelCharacter() {
-  const level = useCharacterState(char => char.level)
+  const level = 1
 
   return (
     <Typography variant="body2">Level: {level}</Typography>

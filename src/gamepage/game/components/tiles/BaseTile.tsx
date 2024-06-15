@@ -3,10 +3,11 @@ import Paper from '@mui/material/Paper';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import React, { CSSProperties, DetailedHTMLProps, HTMLAttributes } from 'react';
 import HtmlTooltip from '../common/HtmlTooltip';
+import { RarityType } from '../../gameTypes';
 
 interface BaseTilePaperProps {
   size: number, 
-  rarityBorderColor?: Rarity,
+  rarityBorderColor?: RarityType,
   selected?: boolean
 }
 
@@ -37,7 +38,7 @@ interface BaseTileProps {
   TileIcon?: React.ComponentType<React.ComponentProps<typeof Icon>>,
   onClick?: (event : React.MouseEvent<HTMLInputElement>) => void,
   tooltipComponent?: JSX.Element,
-  rarityBorderColor?: Rarity,
+  rarityBorderColor?: RarityType,
   selected?: boolean,
   iconSizePercent?: number
   children?: React.ReactNode

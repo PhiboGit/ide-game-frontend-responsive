@@ -4,6 +4,7 @@ import BaseTile from "./BaseTile";
 import { Typography } from "@mui/material";
 import useGameData from "../../stateManagement/GameData/useGameData";
 import ResourceTooltip from "../tooltips/ResourceTooltip";
+import { ResourceId } from "../../gameTypes";
 
 interface ResourceTileProps {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
