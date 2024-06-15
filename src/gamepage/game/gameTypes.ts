@@ -252,7 +252,11 @@ export type ItemRecipeData = {[x: string]: ItemRecipe}
 export type InitGameMessage = {
   type: 'init_game',
   gatheringNodeData: GatheringNodeData,
-  resourceData: ResourceData
+  resourceData: ResourceData,
+  resourceRecipeData: ResourceRecipeData,
+  rarityResourceRecipeData: RarityResourceRecipeData,
+  itemRecipeData: ItemRecipeData,
+  expTableData: ExpTableData
 }
 
 export type InitStatusMessage = {
