@@ -38,7 +38,6 @@ function CharacterUpdater() {
 
   useEffect(() => {
     const unsubscribe = messageManager.subscribeUpdateCharacter((data) => {
-      console.log('update character messages received:', data);
       updateCharacter(data)
     })
     return () => {
@@ -99,12 +98,21 @@ function CharacterUpdater() {
     }
 
     if(update.activeAction !== undefined){
-      const activeAction = update.activeAction
+      console.log("activeAction changed!")
+      // TODO: fix this.
+      // i dont know why i have to set to null first to trigger a re-render/ notify observers
       setCharacterData((prevChar) => (
         { 
-          activeAction: activeAction
+          activeAction: null
         }
       ))
+      const newAction = update.activeAction
+      setCharacterData((prevChar) => (
+        { 
+          activeAction: newAction
+        }
+      ))
+    
     }
 
     if(update.actionQueue !== undefined){
@@ -130,11 +138,13 @@ function CharacterUpdater() {
 }
 
 // New hook that only returns the state
-// Just to be save to only change the state here, eg. over websocket
-export default function useCharacterDataState<SelectorOutput>(
+// Just to be save to only change the state here in CharacterUpdater!
+// CharacterUpdater is controlled by the websocket messages from the server.
+export default function useCharacterState<SelectorOutput>(
   selector: (store: Character) => SelectorOutput
 ): SelectorOutput {
-  const [state] = useCharacter(selector);
+  // does not pass the updated function to the hook. only state
+  const [state, setState] = useCharacter(selector);
   if (state === undefined) {
     console.log('WARNING accessing state!', selector.toString(), state)
   }

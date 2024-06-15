@@ -2,12 +2,13 @@ import { Grid } from '@mui/material';
 import React from 'react'
 import ResourceTile from '../../../components/tiles/ResourceTile';
 import InventoryResourceGridItem from './InventoryResourceGridItem';
-import useCharacterDataState from '../../../stateManagement/CharacterData/useCharacterData';
+import useCharacterState from '../../../stateManagement/CharacterData/useCharacterData';
+import { ResourceId } from '../../../gameTypes';
 
 export default function InventorySection() {
 
-  const resources = useCharacterDataState((char) => char.resources)
-  const characterResources = Object.keys(resources) as ResourceIdString[]
+  const resources = useCharacterState((char) => char.resources)
+  const characterResources = Object.keys(resources) as ResourceId[]
 
   return (
     <div style={{ padding: "1rem" }}>

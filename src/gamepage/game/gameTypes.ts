@@ -305,3 +305,8 @@ export type CraftingMsg = {
     ingredients: ResourceId[]
   }
 }
+
+export type CancelActionMsg = {
+  type: 'cancel_action',
+  index: number
+}

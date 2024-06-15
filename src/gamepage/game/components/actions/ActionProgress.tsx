@@ -2,6 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, IconButton, LinearProgress, Typography, linearProgressClasses, styled } from "@mui/material";
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import ProgressBarTimer from "./ProgressBarTimer";
+import { ActionObject, CancelActionMsg } from "../../gameTypes";
+import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
+import websocketService from "../../../../service/websocketService";
+import useGameDataState from "../../stateManagement/GameData/useGameData";
 
 
 function getDisplayTime(millisec: number): string {
@@ -18,15 +22,47 @@ function getDisplayTime(millisec: number): string {
 }
 
 export default function ActionProgress() {
-  const [totalTime, setTotalTime] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<number>(totalTime);
+  const gameData = useGameDataState((state) => state)
 
-  const handleStartButtonClick = () => {
-    setTotalTime((prev) => prev ? prev  * 2 : 1000 );
-  };
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+
+  const activeAction = useCharacterState((char) => char.activeAction)
+  const totalTime = activeAction?.actionTime ?? 0
+  const counter = activeAction?.counter ?? 0
+  
 
   const cancelTimer = () => {
-    setTotalTime(0);
+    const msg: CancelActionMsg = {
+      type: "cancel_action",
+      index: -1
+    } 
+    websocketService.send(msg)
+  }
+
+  const displayText = () => {
+    if (!activeAction){
+      return 'No Action'
+    }
+    const actionName = getActionName(activeAction)
+    if(!activeAction.actionMsg.limit){
+      return `(${counter +1})  ${actionName}`
+    } else {
+      return `(${counter + 1}/${counter + activeAction.actionMsg.iterations})   ${actionName}`
+    }
+  }
+
+  function getActionName(action: ActionObject): string {
+    if ('node' in action.actionMsg.args) {
+      const node = action.actionMsg.args.node
+      return gameData.gatheringNodeData[node].displayName
+    }
+
+    if ('recipe' in action.actionMsg.args) {
+      const recipe = action.actionMsg.args.recipe
+      return recipe
+    }
+
+    return 'action_name'
   }
 
   const timerFormat = getDisplayTime(timeLeft);
@@ -34,7 +70,8 @@ export default function ActionProgress() {
   return (
     // need a width for the progress bar
     <Box width={"350px"} style={{ position: "relative"}}>
-      <ProgressBarTimer msTime={totalTime} onTimeLeft={setTimeLeft}/>
+      {/* Progress bar added key to trigger even when totalTime does not change. As counter does change with every action */}
+      <ProgressBarTimer key={counter} msTime={totalTime} onTimeLeft={setTimeLeft}/>
       {/* A "hack" to display element over the progress bar
         
       */}
@@ -50,13 +87,10 @@ export default function ActionProgress() {
         <Typography
           noWrap 
         >
-          Current running action
+
+          {displayText()}
+          
         </Typography>
-        <button 
-          onClick={handleStartButtonClick}
-        >
-          Start
-        </button>
         <div style={{ display: "flex"}}>
           <Typography
             noWrap 
