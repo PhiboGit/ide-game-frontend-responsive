@@ -9,10 +9,11 @@ import { ResourceId } from "../../gameTypes";
 interface ResourceTileProps {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
   resourceId: ResourceId
-  count: number
+  count?: number
+  size? : number
 }
 
-export default function ResourceTile({ onClick, resourceId, count = 0}: ResourceTileProps) {
+export default function ResourceTile({ onClick, resourceId, count = 0, size = 3.5}: ResourceTileProps) {
   const resource = useGameData((data) => data.resourceData[resourceId])
   if (!resource) {
     console.log(`Resource ${resourceId} not found`, resource)
@@ -26,7 +27,7 @@ export default function ResourceTile({ onClick, resourceId, count = 0}: Resource
 
   return (
     <BaseTile 
-      size={3.5}
+      size={size}
       iconSizePercent={45}
       onClick={handleClick}
       tooltipComponent={<ResourceTooltip resourceId={resourceId}/>}
