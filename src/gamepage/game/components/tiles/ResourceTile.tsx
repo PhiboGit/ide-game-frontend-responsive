@@ -11,9 +11,10 @@ interface ResourceTileProps {
   resourceId: ResourceId
   count?: number
   size? : number
+  elevation?: number
 }
 
-export default function ResourceTile({ onClick, resourceId, count = 0, size = 3.5}: ResourceTileProps) {
+export default function ResourceTile({ onClick, resourceId, count = 0, size = 3.5, elevation = 1}: ResourceTileProps) {
   const resource = useGameData((data) => data.resourceData[resourceId])
   if (!resource) {
     console.log(`Resource ${resourceId} not found`, resource)
@@ -28,6 +29,7 @@ export default function ResourceTile({ onClick, resourceId, count = 0, size = 3.
   return (
     <BaseTile 
       size={size}
+      elevation={elevation}
       iconSizePercent={45}
       onClick={handleClick}
       tooltipComponent={<ResourceTooltip resourceId={resourceId}/>}

@@ -35,6 +35,7 @@ const BaseTilePaper = styled (Paper, {
 
 interface BaseTileProps {
   size: number,
+  elevation?: number,
   TileIcon?: React.ComponentType<React.ComponentProps<typeof Icon>>,
   onClick?: (event : React.MouseEvent<HTMLInputElement>) => void,
   tooltipComponent?: JSX.Element,
@@ -44,7 +45,7 @@ interface BaseTileProps {
   children?: React.ReactNode
 }
 export default function BaseTile(
-  { size, TileIcon, onClick, tooltipComponent, rarityBorderColor, selected = false, iconSizePercent = 100, children } : BaseTileProps
+  { size, elevation = 1, TileIcon, onClick, tooltipComponent, rarityBorderColor, selected = false, iconSizePercent = 100, children } : BaseTileProps
 ) {
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -62,6 +63,7 @@ export default function BaseTile(
       <BaseTilePaper
         onClick={handleClick}
         size={size}
+        elevation={elevation}
         selected={selected}
         rarityBorderColor={rarityBorderColor}
       >
