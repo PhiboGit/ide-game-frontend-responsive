@@ -15,11 +15,10 @@ export default function SmeltingSection() {
 
   const {resourceRecipes, rarityResourceRecipes, itemRecipes} = getProfessionRecipes('smelting', gameData);
 
-  const [open, setOpen] = React.useState(true);
+  const [openResources, setOpenResources] = React.useState(true);
+  const [openRarityResources, setOpenRarityResources] = React.useState(true);
+  const [openItems, setOpenItems] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
   const [selected, setSelected] = React.useState<string>('');
   const handleSelect = (recipeId: string) => {
@@ -34,22 +33,22 @@ export default function SmeltingSection() {
           width: '100%',
           maxWidth: 200,
           position: 'relative',
-          overflow: 'auto',
+          overflow: 'hidden',
           
         }}
         subheader={<li />}
       >
-      <ListItemButton onClick={handleClick} sx={{ gap: 0.0, padding: 0 }}>
-        {open ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
+      <ListItemButton onClick={() => setOpenResources(!openResources)} sx={{ gap: 0.0, padding: 0 }}>
+        {openResources ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
         <ListItemText secondary="Resources" />
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={openResources} timeout="auto" unmountOnExit>
         <List dense component="div" disablePadding>
-          {Array.from(resourceRecipes.entries()).map(([recipeId, resourceRecipe]) => (
+          {Array.from(resourceRecipes.entries()).map(([recipeId, recipe]) => (
              <ListItem
               key={recipeId}
               secondaryAction={
-                <ResourceTile size={1.3} resourceId={resourceRecipe.resource} />
+                <ResourceTile size={1.3} elevation={0} resourceId={recipe.resource} />
               }
               disablePadding
               sx={{ 
@@ -62,7 +61,69 @@ export default function SmeltingSection() {
               <ListItemButton 
                 selected={selected === recipeId}
                 onClick={() => handleSelect(recipeId)} sx={{ padding: 0 }}>
-                <ListItemText primary={recipeId} />
+                <ListItemText primary={recipe.displayName} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Collapse>
+
+      <ListItemButton onClick={() => setOpenRarityResources(!openRarityResources)} sx={{ gap: 0.0, padding: 0 }}>
+        {openRarityResources ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
+        <ListItemText secondary="Quality Resources" />
+      </ListItemButton>
+      <Collapse in={openRarityResources} timeout="auto" unmountOnExit>
+        <List dense component="div" disablePadding>
+          {Array.from(rarityResourceRecipes.entries()).map(([recipeId, recipe]) => (
+             <ListItem
+              key={recipeId}
+              secondaryAction={
+                <ResourceTile size={1.3} elevation={0} resourceId={recipe.resource_rarity.common!} />
+              }
+              disablePadding
+              sx={{ 
+                pl: 2.5,
+                '& .MuiListItemSecondaryAction-root': {
+                  right: 4
+                }
+               }}
+            >
+              <ListItemButton 
+                selected={selected === recipeId}
+                onClick={() => handleSelect(recipeId)} 
+                sx={{ padding: 0 }}
+              >
+                <ListItemText primary={recipe.displayName} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Collapse>
+
+      <ListItemButton onClick={() => setOpenItems(!openItems)} sx={{ gap: 0.0, padding: 0 }}>
+        {openItems ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
+        <ListItemText secondary="Items" />
+      </ListItemButton>
+      <Collapse in={openItems} timeout="auto" unmountOnExit>
+        <List dense component="div" disablePadding>
+          {Array.from(itemRecipes.entries()).map(([recipeId, recipe]) => (
+             <ListItem
+              key={recipeId}
+              secondaryAction={
+                <></>
+              }
+              disablePadding
+              sx={{ 
+                pl: 2.5,
+                '& .MuiListItemSecondaryAction-root': {
+                  right: 4
+                }
+               }}
+            >
+              <ListItemButton 
+                selected={selected === recipeId}
+                onClick={() => handleSelect(recipeId)} sx={{ padding: 0 }}>
+                <ListItemText primary={recipe.displayName} />
               </ListItemButton>
             </ListItem>
           ))}
