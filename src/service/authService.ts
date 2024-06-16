@@ -1,6 +1,6 @@
 // AuthService.js
 
-const serverIP = '192.168.81.169:5000'
+const serverIP = "172.17.204.13:5000"
 
 class AuthService {
   
