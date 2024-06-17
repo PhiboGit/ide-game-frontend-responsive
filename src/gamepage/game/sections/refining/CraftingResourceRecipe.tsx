@@ -7,9 +7,11 @@ import { getLevel } from "../../gameUtils";
 import { preSelectIngredients } from "./craftingUtils";
 import StartActionController from "../../components/actions/StartActionController";
 import websocketService from "../../../../service/websocketService";
+import useGameDataState from "../../stateManagement/GameData/useGameData";
 
 
 export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe}) {
+  const {resourceData} = useGameDataState((data) => data)
   const [selectedIngredients, setSelectedIngredients] = useState<(ResourceId | "")[]>(preSelectIngredients(recipe));
   console.log(selectedIngredients)
   const character = useCharacterState((char) => char)
@@ -39,6 +41,11 @@ export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe
         flexDirection='column'
         alignItems="center"
         gap={1}
+        marginTop={'1rem'}
+        padding='0.5rem 1rem 1rem 1rem'
+        border={'1px solid'}
+        borderColor='primary.main'
+        borderRadius='5px'
       >
         {/* Titel */}
         <Typography  variant="h5">Recipe: {recipe.displayName}</Typography>
@@ -62,11 +69,9 @@ export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe
           alignItems="flex-end"
           gap={1}
         >
+          
           <Grid item>
-            <Typography variant="body1">{recipe.amount}×</Typography>
-          </Grid>
-          <Grid item>
-            <ResourceTile size={2} elevation={0} resourceId={recipe.resource}/>
+            <ResourceTile size={3} elevation={0} resourceId={recipe.resource} count={recipe.amount}/>
           </Grid>
         </Grid>
 
@@ -96,7 +101,7 @@ export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe
                 </MenuItem>}
               {ingredientSlot.slot.map((ingredient, index) => (
                 <MenuItem key={index} value={ingredient.resource}>
-                  {ingredient.amount}   {ingredient.resource}
+                  {ingredient.amount}   {resourceData[ingredient.resource].displayName}
                 </MenuItem>
               ))}
             </Select>
