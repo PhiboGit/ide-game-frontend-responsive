@@ -49,7 +49,7 @@ export default function NavigationLayout({appbarHeight}: {appbarHeight: number})
     <Box display="flex" sx={{ height: `calc(100vh - ${headerHeight}px)`}}>
       <Box
         component="nav"
-        sx={{ width: { xs: drawerWidthClosed, sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { xs: drawerWidthClosed, md: drawerWidth }, flexShrink: { md: 0 } }}
         aria-label="navigation-drawer"
       >
         {/* at small screen size xs, the miniDrawer is shown with
@@ -57,7 +57,7 @@ export default function NavigationLayout({appbarHeight}: {appbarHeight: number})
 
             at large screen size sm, the permanent drawer is shown
         */}
-        <Box sx={{ display: {height: '100%', xs: 'block', sm: 'none' } }}>
+        <Box sx={{ display: {height: '100%', xs: 'block', md: 'none' } }}>
           <NavDrawerMenu 
             useSection={useSection}
             miniOpen={false}
@@ -72,7 +72,7 @@ export default function NavigationLayout({appbarHeight}: {appbarHeight: number})
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', md: 'none' },
             /* has a fixed position at the top left (this variant). set a marginTop to the height of the header 
                since it is an overlay, need to set width as it is not an element of the box
             */
@@ -85,7 +85,7 @@ export default function NavigationLayout({appbarHeight}: {appbarHeight: number})
           variant="permanent"
           open
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', md: 'block' },
             height: '100%',
             /* 
               set position to relative to be used in the root grid layout, to be under the header 

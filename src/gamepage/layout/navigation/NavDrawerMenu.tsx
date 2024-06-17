@@ -81,7 +81,7 @@ export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle
   return (
     <Box display='flex' flexDirection='column' sx={{ height: '100%'}}>
       <List >
-        <ListItem key={'drawer-open'} disablePadding sx={{ display: { xs: 'block', sm: 'none'} }}>
+        <ListItem key={'drawer-open'} disablePadding sx={{ display: { sm: 'block', md: 'none'} }}>
           <ListItemButtonMini miniOpen={miniOpen} 
             onClick={handleDrawerToggle}
           >
@@ -92,7 +92,7 @@ export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle
           </ListItemButtonMini>
         </ListItem>
         <Divider />
-        <ListItem key={'character'} disablePadding sx={{ display: { xs: 'block', lg: 'none'} }}>
+        <ListItem key={'character'} disablePadding sx={{ display: { sm: 'block', lg: 'none'} }}>
           <ListItemButtonMini miniOpen={miniOpen} 
             selected={sectionName === 'Character'} 
             onClick={() => onItemClick('Character')}
