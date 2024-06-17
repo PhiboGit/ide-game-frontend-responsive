@@ -100,7 +100,7 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
 
       {rarityResourceRecipes.size > 0 &&<ListItemButton onClick={() => setOpenRarityResources(!openRarityResources)} sx={{ padding: 0 }}>
         {openRarityResources ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
-        <ListItemText secondary="Quality Resources" />
+        <ListItemText secondary="Quality Resources" sx={{ display: {xs: 'none', sm: 'block'}}} />
       </ListItemButton>}
       {rarityResourceRecipes.size > 0 &&<Collapse in={openRarityResources} timeout="auto" unmountOnExit>
         <List dense component="div" disablePadding>
@@ -112,12 +112,12 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
               }
               disablePadding
               sx={{ 
-                pl: 2.5,
                 '& .MuiListItemSecondaryAction-root': {
                   right: 4
                 },
                 '& .MuiListItemButton-root': {
-                  padding: 0
+                  padding: 0,
+                  paddingLeft: 2.5,
                 }
                }}
             >
@@ -135,7 +135,7 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
 
       {itemRecipes.size > 0 &&<ListItemButton onClick={() => setOpenItems(!openItems)} sx={{ padding: 0 }}>
         {openItems ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
-        <ListItemText secondary="Items" />
+        <ListItemText secondary="Items" sx={{ display: {xs: 'none', sm: 'block'}}} />
       </ListItemButton>}
       {itemRecipes.size > 0 &&<Collapse in={openItems} timeout="auto" unmountOnExit>
         <List dense component="div" disablePadding>
@@ -147,12 +147,12 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
               }
               disablePadding
               sx={{ 
-                pl: 2.5,
                 '& .MuiListItemSecondaryAction-root': {
                   right: 4
                 },
                 '& .MuiListItemButton-root': {
-                  padding: 0
+                  padding: 0,
+                  paddingLeft: 2.5,
                 }
                }}
             >
