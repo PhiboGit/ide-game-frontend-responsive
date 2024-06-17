@@ -47,9 +47,7 @@ export default function RefiningSection() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box display='flex' justifyContent='center' padding='0.4rem'>
-        <Typography variant="h4">Refining</Typography>
-      </Box>
+      
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange}
           sx={{

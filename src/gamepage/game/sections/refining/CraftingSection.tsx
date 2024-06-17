@@ -4,6 +4,9 @@ import React from "react";
 import RecipeList from "../../components/recipe/RecipeList";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
 import CraftingResourceRecipe from "./CraftingResourceRecipe";
+import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
+import { getLevel, getLevelProgress } from "../../gameUtils";
+import LevelProgressBar from "../../components/stats/LevelProgressBar";
 
 type SelectedRecipe = {
   recipeType: 'resource' | 'rarityResource' | 'item' | null,
@@ -13,6 +16,9 @@ export default function CraftingSection({professionId}: {professionId: Professio
   const [selected, setSelected] = React.useState<SelectedRecipe>({recipeType: null, recipeId: null});
 
   const {resourceRecipeData, rarityResourceRecipeData, itemRecipeData} = useGameDataState((data) => data);
+  const professionExp = useCharacterState((char) => char.professions[professionId].exp)
+  const professionLevel = getLevel(professionExp)
+  const {progress, levelUpInExp} = getLevelProgress(professionExp)
   const recipe = getRecipe()
   function getRecipe(): ResourceRecipe | RarityResourceRecipe | ItemRecipe | null {
     if(!selected.recipeId) return null
@@ -35,10 +41,15 @@ export default function CraftingSection({professionId}: {professionId: Professio
       
       <RecipeList profession={professionId} onChange={handleSelect}/>
       <Divider orientation="vertical" flexItem/>
-      {(recipe && selected.recipeType === 'resource')  && 
-        <CraftingResourceRecipe key={recipe.id} recipe={recipe as ResourceRecipe}/>
-      }
-      
+      <Box flex={1} display='flex' flexDirection='column' alignItems={'center'} mt='.75rem'>
+        <Box width='200px' display='flex' flexDirection={'column'} alignItems='center'>
+          <Typography variant="h5" noWrap textTransform={'capitalize'}>{professionId} Lv. {professionLevel}</Typography>
+          <LevelProgressBar progress={progress} levelUpInExp={levelUpInExp}/>
+        </Box>
+        {(recipe && selected.recipeType === 'resource')  && 
+          <CraftingResourceRecipe key={recipe.id} recipe={recipe as ResourceRecipe}/>
+        }
+      </Box>
     </Box>
   )
 }

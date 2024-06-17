@@ -12,3 +12,13 @@ export function getLevel(exp: number): number {
     }
     return level
 }
+
+export function getLevelProgress(exp: number) {
+    const {expTableData} = useGameDataState((data) => data)
+
+    const level = getLevel(exp)
+    const nextLevel = level + 1
+    const nextLevelExp = expTableData.exp[nextLevel]
+    const progress = (exp - expTableData.exp[level]) / (nextLevelExp - expTableData.exp[level]) * 100
+    return {progress, levelUpInExp: nextLevelExp - exp}
+}
