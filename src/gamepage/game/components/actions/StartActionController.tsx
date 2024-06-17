@@ -39,16 +39,20 @@ const StartActionController = ({limit, setLimit, iterations, setIterations, star
           display="flex"
           flexDirection='column'
           alignItems="center"
+          px={2}
         >
           <Stack direction="row" alignItems={"center"} spacing={1}>
-            <HtmlTooltip title="unlimted iterations">
+            {!limit &&<HtmlTooltip title="unlimted iterations">
               <AllInclusiveIcon fontSize="small" />
-            </HtmlTooltip>
-            <FormControlLabel label="Limit Iterations" control={<Switch checked={limit} onChange={(event) => setLimit(event.target.checked)}/>}/>
-            <VerticalAlignTopIcon fontSize="small" />
+            </HtmlTooltip>}
+            {limit &&<HtmlTooltip title="limted iterations">
+              <VerticalAlignTopIcon fontSize="small" />
+            </HtmlTooltip>}
+            <FormControlLabel label="Limit" control={<Switch checked={limit} onChange={(event) => setLimit(event.target.checked)}/>}/>
           </Stack>
         
         {limit && (<TextField
+          style={{width: '150px'}}
           label="Iterations"
           id="outlined-size-small"
           value= {iterations}
