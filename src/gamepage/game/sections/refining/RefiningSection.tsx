@@ -3,7 +3,7 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import SmeltingSection from './SmeltingSection';
+import CraftingSection from './CraftingSection';
 
 
 interface TabPanelProps {
@@ -76,13 +76,13 @@ export default function RefiningSection() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <SmeltingSection />
+        <CraftingSection professionId='smelting'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-       
+        <CraftingSection professionId='woodworking'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        
+        <CraftingSection professionId='weaving'/>
       </CustomTabPanel>
     </Box>
   )

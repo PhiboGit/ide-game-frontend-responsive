@@ -3,7 +3,7 @@ import { ProfessionId } from "../../gameTypes";
 import useGameDataState from "../../stateManagement/GameData/useGameData"
 
 import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import ResourceTile from "../../components/tiles/ResourceTile";
 import { getProfessionRecipes } from "./getProfessionRecipes";
 
@@ -27,6 +27,17 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
     setSelected(recipeId);
     onChange(recipeType, recipeId);
   }
+
+  // preselect first recipe
+  useEffect(() => {
+    if(resourceRecipes.size > 0) {
+        handleSelect('resource', resourceRecipes.keys().next().value)
+    } else if(rarityResourceRecipes.size > 0) {
+        handleSelect('rarityResource', rarityResourceRecipes.keys().next().value)
+    } else if(itemRecipes.size > 0) {
+        handleSelect('item', itemRecipes.keys().next().value)
+    }
+  }, [])
 
   return (
     <Box display='flex'>
@@ -152,7 +163,6 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
         </List>
       </Collapse>}
     </List>
-    <Divider orientation="vertical" flexItem/>
     </Box>
   )
 }
