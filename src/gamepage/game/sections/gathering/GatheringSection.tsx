@@ -6,7 +6,7 @@ import useGameDataState from '../../stateManagement/GameData/useGameData';
 import { GatheringMsg, ProfessionId } from '../../gameTypes';
 import websocketService from '../../../../service/websocketService';
 import LevelProgressBar from '../../components/stats/LevelProgressBar';
-import { getLevelProgress } from '../../gameUtils';
+import { getLevel, getLevelProgress } from '../../gameUtils';
 import useCharacterState from '../../stateManagement/CharacterData/useCharacterData';
 
 export default function GatheringSection() {
@@ -52,10 +52,11 @@ export default function GatheringSection() {
         {Array.from(groupedNodes.entries()).map(([profession, nodes]) => {
           const professionExp = useCharacterState((char) => char.professions[profession].exp)
           const {progress, levelUpInExp} = getLevelProgress(professionExp)
+          const level = getLevel(professionExp)
           return(
           <Box key={profession} display="flex" flexDirection={"column"} gap="1rem"  >
             <Box width='200px' display='flex' flexDirection={'column'} alignSelf={'center'} alignItems='center'>
-              <Typography variant="h4" textTransform={'capitalize'}>{profession}</Typography>
+              <Typography variant="h5" noWrap textTransform={'capitalize'}>{profession} Lv. {level}</Typography>
               <LevelProgressBar progress={progress} levelUpInExp={levelUpInExp} />
             </Box>
             <Grid container spacing={2}>
