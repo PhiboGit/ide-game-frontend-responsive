@@ -71,6 +71,9 @@ export default function RefiningSection() {
           <Tab label="Smelting" {...a11yProps(0)} />
           <Tab label="Woodworking" {...a11yProps(1)} />
           <Tab label="Weaving" {...a11yProps(2)} />
+          <Tab label="Smith" {...a11yProps(3)} />
+          <Tab label="Engineer" {...a11yProps(4)} />
+          <Tab label="Artificer" {...a11yProps(5)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -81,6 +84,15 @@ export default function RefiningSection() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <CraftingSection professionId='weaving'/>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <CraftingSection professionId='smith'/>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        <CraftingSection professionId='engineer'/>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={5}>
+        <CraftingSection professionId='artificer'/>
       </CustomTabPanel>
     </Box>
   )
