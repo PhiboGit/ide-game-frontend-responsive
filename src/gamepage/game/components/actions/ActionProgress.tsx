@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Box, Button, IconButton, LinearProgress, Typography, linearProgressClasses, styled } from "@mui/material";
+import { useState } from "react";
+import { Box, IconButton, Typography } from "@mui/material";
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import ProgressBarTimer from "./ProgressBarTimer";
 import { ActionObject, CancelActionMsg } from "../../gameTypes";
@@ -22,8 +22,6 @@ function getDisplayTime(millisec: number): string {
 }
 
 export default function ActionProgress() {
-  const gameData = useGameDataState((state) => state)
-
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
   const activeAction = useCharacterState((char) => char.activeAction)
@@ -39,31 +37,6 @@ export default function ActionProgress() {
     websocketService.send(msg)
   }
 
-  const displayText = () => {
-    if (!activeAction){
-      return 'No Action'
-    }
-    const actionName = getActionName(activeAction)
-    if(!activeAction.actionMsg.limit){
-      return `(${counter +1})  ${actionName}`
-    } else {
-      return `(${counter + 1}/${counter + activeAction.actionMsg.iterations})   ${actionName}`
-    }
-  }
-
-  function getActionName(action: ActionObject): string {
-    if ('node' in action.actionMsg.args) {
-      const node = action.actionMsg.args.node
-      return gameData.gatheringNodeData[node].displayName
-    }
-
-    if ('recipe' in action.actionMsg.args) {
-      const recipe = action.actionMsg.args.recipe
-      return recipe
-    }
-
-    return 'action_name'
-  }
 
   const timerFormat = getDisplayTime(timeLeft);
 
@@ -84,14 +57,8 @@ export default function ActionProgress() {
         justifyContent='space-between'
         paddingLeft=".3rem"
       >
-        <Typography
-          noWrap 
-        >
-
-          {displayText()}
-          
-        </Typography>
-        <div style={{ display: "flex"}}>
+        <ActionProgressText activeAction={activeAction}/>
+        <Box display="flex">
           <Typography
             noWrap 
             >
@@ -102,8 +69,80 @@ export default function ActionProgress() {
             sx={{ padding: "0", paddingLeft: ".2rem"}}>
             <CancelRoundedIcon />
           </IconButton>
-        </div>
+        </Box>
       </Box>
     </Box>
   );
+}
+
+function ActionProgressText({activeAction}: {activeAction: ActionObject | null}) {
+  const gameData = useGameDataState((state) => state)
+
+  const counter = activeAction?.counter ?? 0
+
+  const displayProfessionText = () => {
+    if (!activeAction){
+      return ''
+    }
+    if ('node' in activeAction.actionMsg.args) {
+      const node = activeAction.actionMsg.args.node
+      return gameData.gatheringNodeData[node].profession
+    }
+
+    if ('recipe' in activeAction.actionMsg.args) {
+      const recipeId = activeAction.actionMsg.args.recipe
+      const recipe = gameData.resourceRecipeData[recipeId] || gameData.rarityResourceRecipeData[recipeId] || gameData.itemRecipeData[recipeId]
+      return recipe.profession
+    }
+    return 'profession_name'
+  }
+
+  const displayActionText = () => {
+    if (!activeAction){
+      return 'No Action'
+    }
+    if ('node' in activeAction.actionMsg.args) {
+      const node = activeAction.actionMsg.args.node
+      return gameData.gatheringNodeData[node].displayName
+    }
+
+    if ('recipe' in activeAction.actionMsg.args) {
+      const recipeId = activeAction.actionMsg.args.recipe
+      const recipe = gameData.resourceRecipeData[recipeId] || gameData.rarityResourceRecipeData[recipeId] || gameData.itemRecipeData[recipeId]
+      return recipe.displayName
+    }
+
+    return 'action_name'
+  }
+
+  const displayCounterText = () => {
+    if (!activeAction){
+      return ''
+    }
+    if(!activeAction.actionMsg.limit){
+      return `(${counter +1})`
+    } else {
+      return `(${counter + 1}/${counter + activeAction.actionMsg.iterations})`
+    }
+  }
+
+
+  return (
+    <Box display ='flex' flexDirection='row' gap={'.5rem'}>
+      <Typography noWrap>
+        {displayCounterText()}
+      </Typography>
+      <Typography
+        noWrap 
+        textTransform='capitalize'
+      >
+        {displayProfessionText()}
+      </Typography>
+      <Typography
+        noWrap 
+      >
+        {displayActionText()}
+      </Typography>
+    </Box>
+  )
 }

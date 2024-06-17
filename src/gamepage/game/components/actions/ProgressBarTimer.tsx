@@ -7,12 +7,12 @@ const StyledProgressBar = styled(LinearProgress, {
   shouldForwardProp: (prop) => prop !== "classes",
 })<ProgressBarProps>(({ theme }) => ({
   height: '1.5rem',
-  borderRadius: 5,
+  borderRadius: 100,
   [`&.${linearProgressClasses.colorPrimary}`]: {
     backgroundColor: theme.palette.grey[600],
   },
   [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
+    borderRadius: 100,
     backgroundColor: theme.palette.primary.main,
   },
 
