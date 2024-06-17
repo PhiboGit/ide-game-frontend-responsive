@@ -44,7 +44,7 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
       <List
         dense
         sx={{
-          width: 150,
+          width: {xs: '40px', sm: '150px'},
           position: 'relative',
           overflow: 'hidden',
           
@@ -53,7 +53,7 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
       >
       {resourceRecipes.size > 0 && <ListItemButton onClick={() => setOpenResources(!openResources)} sx={{ padding: 0 }}>
         {openResources ? <ExpandLess fontSize="small"/> : <ExpandMore fontSize="small"/>}
-        <ListItemText secondary="Resources" />
+        <ListItemText secondary="Resources" sx={{ display: {xs: 'none', sm: 'block'}}}/>
       </ListItemButton>}
       {resourceRecipes.size > 0 && <Collapse in={openResources} timeout="auto" unmountOnExit>
         <List dense component="div" disablePadding>
@@ -61,13 +61,11 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
              <ListItem
               key={recipeId}
               secondaryAction={
-                <ResourceTile size={1.3} elevation={0} resourceId={recipe.resource} />
+                <ResourceTile size={1.3} elevation={0} resourceId={recipe.resource} onClick={() => handleSelect("resource", recipeId)}  />
               }
               // no padding to be compact
               disablePadding
               sx={{ 
-                // padding left, to align with the the headline + icon
-                pl: 2.5,
                 // overwrite to have the secendaryAction (icon) on the right
                 '& .MuiListItemSecondaryAction-root': {
                   right: 4
@@ -85,10 +83,15 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
                 sx={{ padding: 0 }}
                 >
                 <ListItemText 
-                    primary={recipe.displayName} 
-                    // with the paddingRight and noWrap the text is never under the secondaryAction icon!
-                    primaryTypographyProps={{ noWrap: true }} 
-                    sx={{ paddingRight: 3.5 }}/>
+                  primary={recipe.displayName} 
+                  // with the paddingRight and noWrap the text is never under the secondaryAction icon!
+                  primaryTypographyProps={{ noWrap: true }} 
+                  sx={{ 
+                    paddingRight: 3.5,
+                    // padding left, to align with the the headline + icon
+                    paddingLeft: 2.5,
+                  }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
@@ -105,7 +108,7 @@ export default function RecipeList({profession, onChange}: RecipeListProps) {
              <ListItem
               key={recipeId}
               secondaryAction={
-                <ResourceTile size={1.3} elevation={0} resourceId={recipe.resource_rarity.common!} />
+                <ResourceTile size={1.3} elevation={0} resourceId={recipe.resource_rarity.common!} onClick={() => handleSelect("resource", recipeId)}/>
               }
               disablePadding
               sx={{ 
