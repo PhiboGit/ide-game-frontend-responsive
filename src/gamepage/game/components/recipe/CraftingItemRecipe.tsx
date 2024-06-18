@@ -1,18 +1,24 @@
 import { Box, Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import { CraftingMsg, ResourceId, ResourceRecipe } from "../../gameTypes";
+import { CraftingMsg, Ingredient, ItemRecipe, RarityResourceRecipe, RarityType, ResourceId, ResourceRecipe } from "../../gameTypes";
 import { useState } from "react";
-import ResourceTile from "../../components/tiles/ResourceTile";
+import ResourceTile from "../tiles/ResourceTile";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
 import { getLevel } from "../../gameUtils";
-import { preSelectIngredients } from "./craftingUtils";
-import StartActionController from "../../components/actions/StartActionController";
+import { getOdds, preSelectIngredients } from "./craftingUtils";
+import StartActionController from "../actions/StartActionController";
 import websocketService from "../../../../service/websocketService";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
+import IngredientsSelectors from "./IngredientsSelectors";
 
 
-export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe}) {
+export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
   const {resourceData} = useGameDataState((data) => data)
-  const [selectedIngredients, setSelectedIngredients] = useState<(ResourceId | "")[]>(preSelectIngredients(recipe));
+  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(preSelectIngredients(recipe));
+  function onChangeIngredients(slotIndex: number, value: Ingredient) {
+    const newIngredients = [...selectedIngredients]
+    newIngredients[slotIndex] = value
+    setSelectedIngredients(newIngredients)
+  }
   console.log(selectedIngredients)
   const character = useCharacterState((char) => char)
   const professionLevel = getLevel(character.professions[recipe.profession].exp)
@@ -22,12 +28,12 @@ export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe
 
   function start(){
     const msg: CraftingMsg = {
-      type: "crafting_resource",
+      type: "crafting_item",
       limit: limit,
       iterations: iterations,
       args: {
         recipe: recipe.id,
-        ingredients: selectedIngredients.filter((i) => i !== "") as ResourceId[]
+        ingredients: selectedIngredients.filter((i) => i !== "empty") as ResourceId[]
       }
     }
 
@@ -70,45 +76,10 @@ export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe
           gap={1}
         >
           
-          <Grid item>
-            <ResourceTile size={3} elevation={0} resourceId={recipe.resource} count={recipe.amount}/>
-          </Grid>
         </Grid>
 
         {/* Ingredients */}
-        <Box 
-          display="flex"
-          flexDirection='row'
-          alignItems="center"
-        >
-          {recipe.ingredients.map((ingredientSlot, slotIndex) => (
-            
-          <FormControl key={slotIndex} sx={{ m: 1, minWidth: 80 }}>
-            <InputLabel id="ingredient-label">Ingredient</InputLabel>
-            <Select
-              labelId="ingredient-label"
-              id="ingredient"
-              value={selectedIngredients[slotIndex]}
-              onChange={(event) => setSelectedIngredients((pre) => {
-                const newPre = [...pre]
-                newPre[slotIndex] = event.target.value as (ResourceId | "")
-                return newPre
-              })}
-            >
-              {!ingredientSlot.required && 
-                <MenuItem key={"empty"} value={""}>
-                  empty
-                </MenuItem>}
-              {ingredientSlot.slot.map((ingredient, index) => (
-                <MenuItem key={index} value={ingredient.resource}>
-                  {ingredient.amount}   {resourceData[ingredient.resource].displayName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          ))}
-          </Box>
-
+        <IngredientsSelectors recipe={recipe} selectedIngredients={selectedIngredients} onChange={onChangeIngredients}/>
 
           <StartActionController limit={limit} setLimit={setLimit} iterations={iterations} setIterations={setIterations} startDisabled={false} onClickStart={start}/>
       </Box>

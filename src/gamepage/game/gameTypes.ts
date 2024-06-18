@@ -45,7 +45,7 @@ export const resourceIds = [
 
 export type ResourceId = typeof resourceIds[number];
 export type Resources = Record<ResourceId, number>;
-
+export type Ingredient = ResourceId | "empty"
 
 export const bonusTypes = [
   "con", "int", "str", "dex", "foc",

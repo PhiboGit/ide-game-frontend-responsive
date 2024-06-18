@@ -1,18 +1,20 @@
 import { Box, Container, Divider, Typography } from "@mui/material";
 import { ItemRecipe, ProfessionId, RarityResourceRecipe, ResourceRecipe } from "../../gameTypes";
 import React from "react";
-import RecipeList from "../../components/recipe/RecipeList";
+import RecipeList from "./RecipeList";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
 import CraftingResourceRecipe from "./CraftingResourceRecipe";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
 import { getLevel, getLevelProgress } from "../../gameUtils";
-import LevelProgressBar from "../../components/stats/LevelProgressBar";
+import LevelProgressBar from "../stats/LevelProgressBar";
+import CraftingQualityResourceRecipe from "./CraftingQualityResourceRecipe";
+import CraftingItemRecipe from "./CraftingItemRecipe";
 
 type SelectedRecipe = {
   recipeType: 'resource' | 'rarityResource' | 'item' | null,
   recipeId: string | null
 }
-export default function CraftingSection({professionId}: {professionId: ProfessionId}) {
+export default function RecipeSelector({professionId}: {professionId: ProfessionId}) {
   const [selected, setSelected] = React.useState<SelectedRecipe>({recipeType: null, recipeId: null});
 
   const {resourceRecipeData, rarityResourceRecipeData, itemRecipeData} = useGameDataState((data) => data);
@@ -48,6 +50,12 @@ export default function CraftingSection({professionId}: {professionId: Professio
         </Box>
         {(recipe && selected.recipeType === 'resource')  && 
           <CraftingResourceRecipe key={recipe.id} recipe={recipe as ResourceRecipe}/>
+        }
+        {(recipe && selected.recipeType === 'rarityResource')  && 
+          <CraftingQualityResourceRecipe key={recipe.id} recipe={recipe as RarityResourceRecipe}/>
+        }
+        {(recipe && selected.recipeType === 'item')  && 
+          <CraftingItemRecipe key={recipe.id} recipe={recipe as ItemRecipe}/>
         }
       </Box>
     </Box>

@@ -1,9 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import StartIcon from '@mui/icons-material/Start';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -14,14 +11,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import GatheringSection from '../../game/sections/gathering/GatheringSection';
-import RefiningSection from '../../game/sections/refining/RefiningSection';
 import CharacterSection from '../../game/sections/character/CharacterSection';
 import { LogoutButton } from '../../../homepage/home/AuthComponent';
 import { styled } from '@mui/material';
+import CraftingProfessionTabs from '../../game/sections/crafting/CraftingProfessionTabs';
 
 interface StyledProps {
   miniOpen: boolean;
@@ -49,7 +44,7 @@ const ListItemTextMini = styled(ListItemText, {
   display: miniOpen ? 'initial' : 'none',
 }));
 
-type SectionName = "Gathering" | "Refining" | "Character";
+type SectionName = "Gathering" | "Crafting" | "Character";
 interface Props {
   useSection: () => { mainSection: React.ReactNode, setMainSection: React.Dispatch<React.SetStateAction<React.ReactNode>> };
   miniOpen: boolean;
@@ -58,7 +53,7 @@ interface Props {
 
 const sectionMap: Map<SectionName, React.ComponentType> = new Map([
   ["Gathering", GatheringSection],
-  ["Refining", RefiningSection],
+  ["Crafting", CraftingProfessionTabs],
   ["Character", CharacterSection],
 ]);
 
@@ -104,7 +99,7 @@ export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle
             <ListItemTextMini miniOpen={miniOpen} primary={'Character'} />
           </ListItemButtonMini>
         </ListItem>
-        {['Gathering', 'Refining'].map((text, index) => (
+        {['Gathering', 'Crafting'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButtonMini miniOpen={miniOpen} selected={sectionName === text} onClick={() => onItemClick(text as SectionName)}>
               <ListItemIconMini miniOpen={miniOpen}>

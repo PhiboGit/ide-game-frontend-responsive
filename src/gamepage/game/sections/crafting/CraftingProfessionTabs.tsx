@@ -3,7 +3,7 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import CraftingSection from './CraftingSection';
+import CraftingSection from '../../components/recipe/RecipeSelector';
 
 
 interface TabPanelProps {
@@ -38,7 +38,7 @@ function a11yProps(index: number) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-export default function RefiningSection() {
+export default function CraftingProfessionTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -49,8 +49,14 @@ export default function RefiningSection() {
     <Box sx={{ width: '100%' }}>
       
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange}
+        <Tabs 
+          value={value} 
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
           sx={{
+            maxWidth: { xs: 300, sm: 500, md: 800 },
             minHeight: '32px',
             "& button": {
               minHeight: '32px',
