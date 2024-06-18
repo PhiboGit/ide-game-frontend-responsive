@@ -17,6 +17,12 @@ import CharacterSection from '../../game/sections/character/CharacterSection';
 import { LogoutButton } from '../../../homepage/home/AuthComponent';
 import { styled } from '@mui/material';
 import CraftingProfessionTabs from '../../game/sections/crafting/CraftingProfessionTabs';
+import WoodworkingSection from '../../game/sections/crafting/WoodworkingSection';
+import EngineerSection from '../../game/sections/crafting/EngineerSection';
+import SmeltingSection from '../../game/sections/crafting/SmeltingSection';
+import SmithSection from '../../game/sections/crafting/SmithSection';
+import WeavingSection from '../../game/sections/crafting/WeavingSection';
+import ArtificerSection from '../../game/sections/crafting/WoodworkingSection';
 
 interface StyledProps {
   miniOpen: boolean;
@@ -44,7 +50,7 @@ const ListItemTextMini = styled(ListItemText, {
   display: miniOpen ? 'initial' : 'none',
 }));
 
-type SectionName = "Gathering" | "Crafting" | "Character";
+type SectionName = "Character" | "Gathering" | "Crafting" | "Woodworking" | "Smelting" | "Weaving" | "Engineer" | "Smith" | "Artificer";
 interface Props {
   useSection: () => { mainSection: React.ReactNode, setMainSection: React.Dispatch<React.SetStateAction<React.ReactNode>> };
   miniOpen: boolean;
@@ -52,9 +58,15 @@ interface Props {
 }
 
 const sectionMap: Map<SectionName, React.ComponentType> = new Map([
+  ["Character", CharacterSection],
   ["Gathering", GatheringSection],
   ["Crafting", CraftingProfessionTabs],
-  ["Character", CharacterSection],
+  ["Woodworking", WoodworkingSection],
+  ["Smelting", SmeltingSection],
+  ["Weaving", WeavingSection],
+  ["Engineer", EngineerSection],
+  ["Smith", SmithSection],
+  ["Artificer", ArtificerSection],
 ]);
 
 export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle }: Props) {
@@ -99,7 +111,7 @@ export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle
             <ListItemTextMini miniOpen={miniOpen} primary={'Character'} />
           </ListItemButtonMini>
         </ListItem>
-        {['Gathering', 'Crafting'].map((text, index) => (
+        {[...sectionMap.keys()].filter(sectionName => sectionName !== 'Character').map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButtonMini miniOpen={miniOpen} selected={sectionName === text} onClick={() => onItemClick(text as SectionName)}>
               <ListItemIconMini miniOpen={miniOpen}>

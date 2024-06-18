@@ -3,7 +3,7 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import CraftingSection from '../../components/recipe/RecipeSelector';
+import RecipeSelector from '../../components/recipe/RecipeSelector';
 
 
 interface TabPanelProps {
@@ -83,22 +83,22 @@ export default function CraftingProfessionTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <CraftingSection professionId='smelting'/>
+        <RecipeSelector professionId='smelting'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <CraftingSection professionId='woodworking'/>
+        <RecipeSelector professionId='woodworking'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <CraftingSection professionId='weaving'/>
+        <RecipeSelector professionId='weaving'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <CraftingSection professionId='smith'/>
+        <RecipeSelector professionId='smith'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <CraftingSection professionId='engineer'/>
+        <RecipeSelector professionId='engineer'/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-        <CraftingSection professionId='artificer'/>
+        <RecipeSelector professionId='artificer'/>
       </CustomTabPanel>
     </Box>
   )
