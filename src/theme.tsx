@@ -4,6 +4,7 @@ import { alpha, createTheme } from '@mui/material/styles';
 // Augment the palette to include an rarity color
 declare module '@mui/material/styles' {
   interface Palette {
+    noneRarity: Palette['primary'];
     commonRarity: Palette['primary'];
     uncommonRarity: Palette['primary'];
     rareRarity: Palette['primary'];
@@ -12,6 +13,7 @@ declare module '@mui/material/styles' {
   }
 
   interface PaletteOptions {
+    noneRarity?: PaletteOptions['primary'];
     commonRarity?: PaletteOptions['primary'];
     uncommonRarity?: PaletteOptions['primary'];
     rareRarity?: PaletteOptions['primary'];
@@ -37,6 +39,9 @@ const themePalette = createTheme({
 
     },
 
+    noneRarity: {
+      main: "#f2f2f2",
+    },
     commonRarity: {
       main: "#b0b0b0",
     },
