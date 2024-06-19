@@ -1,6 +1,6 @@
 import RecipeSelector from "../../components/recipe/RecipeSelector";
 
-export default function ArtificerSection() {
+export default function WoodworkingSection() {
   return (
     <RecipeSelector professionId='woodworking'/>
   )

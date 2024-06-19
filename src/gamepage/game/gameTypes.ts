@@ -99,7 +99,7 @@ export type ActionMsg = GatheringMsg | CraftingMsg
 
 export type Item = {
   _id: string;
-  name: string;
+  displayName: string;
   equipmentProfessions: ProfessionId[];
   equipmentSlot: EquipmentSlot;
   level: number;
@@ -270,7 +270,7 @@ export type InitCharacterMessage = {
   character: Character
 }
 
-type UpdateParameters = {
+type UpdatedData = {
   characterName: string,
   resources?: Partial<Resources>,
   experiences?: Partial<Record<ProfessionId, number>>,
@@ -278,11 +278,11 @@ type UpdateParameters = {
   currency?: Partial<Currency>
   activeAction?: ActionObject | null,
   actionQueue?: ActionObject[]
-  itemId?: string
+  item?: Item
 }
 export type UpdateCharacterMessage = {
   type: 'update_character',
-  updateParameters: UpdateParameters
+  updatedData: UpdatedData
 }
 
 // messages types outgoing

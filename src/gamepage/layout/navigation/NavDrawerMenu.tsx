@@ -22,7 +22,7 @@ import EngineerSection from '../../game/sections/crafting/EngineerSection';
 import SmeltingSection from '../../game/sections/crafting/SmeltingSection';
 import SmithSection from '../../game/sections/crafting/SmithSection';
 import WeavingSection from '../../game/sections/crafting/WeavingSection';
-import ArtificerSection from '../../game/sections/crafting/WoodworkingSection';
+import ArtificerSection from '../../game/sections/crafting/ArtificerSection';
 
 interface StyledProps {
   miniOpen: boolean;
