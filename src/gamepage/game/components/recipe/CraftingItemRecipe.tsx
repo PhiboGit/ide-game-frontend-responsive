@@ -68,6 +68,13 @@ export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
           <Typography fontSize='.66rem' color={'text.secondary'}>Char. Exp. {recipe.expChar}</Typography>          
         </Box>
         {/* Output */}
+        <Typography variant="body1">
+          GearScore: roll 100 + baseGearScore:{recipe.baseGearScore} + 0.1*level  + craftingBonus 
+          <br/>
+          #Bonus: gearScore breakpoints: 100, 250, 450, 700
+          <br/>
+          {JSON.stringify(recipe.availableBoni)}
+        </Typography>
         <Grid
           container
           direction="row"
