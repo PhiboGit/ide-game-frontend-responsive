@@ -9,12 +9,12 @@ import useCharacterState from "../../stateManagement/CharacterData/useCharacterD
 interface ItemTileProps {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
   itemId: string
-  count?: number
+  enchantingLevel?: number
   size? : number
   elevation?: number
 }
 
-export default function ItemTile({ onClick, itemId, count = 0, size = 3.5, elevation = 1}: ItemTileProps) {
+export default function ItemTile({ onClick, itemId, enchantingLevel = 0, size = 3.5, elevation = 1}: ItemTileProps) {
   const itemMap = useCharacterState((char) => char.itemMap)
   const item = itemMap[itemId]
   if (!item) {
@@ -40,10 +40,10 @@ export default function ItemTile({ onClick, itemId, count = 0, size = 3.5, eleva
         lineHeight={.95}
         fontSize={'.75rem'}
         variant="body2"
-        textAlign='end' 
-        sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: '1.5px 3.5px', textShadow: '1px 1px 1px black'}}
+        textAlign='start' 
+        sx={{ position: 'absolute', top: 0, left: 0, width: '100%', padding: '1.5px 3.5px', textShadow: '1px 1px 1px black'}}
       >
-        {count ? count : ''}
+        {enchantingLevel ? `+${enchantingLevel}` : ''}
       </Typography>
     </BaseTile>
   );
