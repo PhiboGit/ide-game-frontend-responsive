@@ -129,7 +129,7 @@ export type ExpTableData = {
 export type GatheringNode = {
   id: string,
   displayName: string,
-  desciption: string,
+  description: string,
   profession: ProfessionId,
   tier: number,
   level: number,
@@ -147,7 +147,7 @@ export type GatheringNodeData = Record<string, GatheringNode>
 export type Resource = {
   id: ResourceId,
   displayName: string,
-  desciption: string,
+  description: string,
   rarity: RarityType,
   tier: number,
   sellValue: number,

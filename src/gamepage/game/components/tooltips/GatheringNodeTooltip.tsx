@@ -18,7 +18,7 @@ export default function GatheringNodeTooltip({nodeId}: {nodeId: string}) {
         <Typography fontSize='1rem' >{node.minAmount}-{node.maxAmount}</Typography>
         <ResourceChip resourceId={node.resource}/>
       </Box>
-      <Typography fontSize='.8rem' color='text.secondary'>{node.desciption}</Typography>
+      <Typography fontSize='.8rem' color='text.secondary'>{node.description}</Typography>
       <Grid container mt={2}>
         <Grid item xs={6}>
           <Typography 
