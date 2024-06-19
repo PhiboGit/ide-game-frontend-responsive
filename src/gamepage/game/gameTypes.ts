@@ -99,6 +99,7 @@ export type ActionMsg = GatheringMsg | CraftingMsg
 
 export type Item = {
   _id: string;
+  item_id: string;
   displayName: string;
   equipmentProfessions: ProfessionId[];
   equipmentSlot: EquipmentSlot;
@@ -212,6 +213,7 @@ export type RarityResourceRecipeData = Record<string, RarityResourceRecipe>
 
 export type ItemRecipe = {
   id: string
+  item_id: string
   displayName: string
   description: string
   profession: ProfessionId
