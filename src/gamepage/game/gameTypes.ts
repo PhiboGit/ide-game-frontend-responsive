@@ -312,3 +312,9 @@ export type CancelActionMsg = {
   type: 'cancel_action',
   index: number
 }
+
+export type SellResourceMsg = {
+  type: 'sell_resource',
+  resource: ResourceId,
+  amount: number
+}

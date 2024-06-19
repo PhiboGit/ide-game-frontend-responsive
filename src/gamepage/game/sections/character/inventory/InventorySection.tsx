@@ -7,7 +7,7 @@ import { ResourceId } from '../../../gameTypes';
 import ItemTile from '../../../components/tiles/ItemTile';
 
 export default function InventorySection() {
-
+  const gold = useCharacterState((char) => char.currency.gold)
   const resources = useCharacterState((char) => char.resources)
   const characterResources = Object.keys(resources) as ResourceId[]
   const itemIds = useCharacterState((char) => char.items)
@@ -15,6 +15,13 @@ export default function InventorySection() {
 
   return (
     <div style={{ padding: "1rem" }}>
+      <Typography variant="h6" mb={1}>Currency:</Typography>
+      <Grid container spacing={1}>
+          <Grid item key={'gold'}>
+            <Typography variant="body1">Gold: {gold}</Typography>
+          </Grid>
+      </Grid>
+      <Divider sx={{my: 2}}/>
       <Typography variant="h6" mb={1}>Resources:</Typography>
       <Grid container spacing={1}>
         {characterResources.map((key) => (
