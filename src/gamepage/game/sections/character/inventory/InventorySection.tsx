@@ -4,6 +4,7 @@ import ResourceTile from '../../../components/tiles/ResourceTile';
 import InventoryResourceGridItem from './InventoryResourceGridItem';
 import useCharacterState from '../../../stateManagement/CharacterData/useCharacterData';
 import { ResourceId } from '../../../gameTypes';
+import ItemTile from '../../../components/tiles/ItemTile';
 
 export default function InventorySection() {
 
@@ -25,7 +26,7 @@ export default function InventorySection() {
       <Grid container spacing={1}>
         {itemIds.map((itemId) => (
           <Grid item key={itemId}>
-            {JSON.stringify(itemMap[itemId], null, 2)}
+            <ItemTile itemId={itemId} />
           </Grid>
         ))}
       </Grid>
