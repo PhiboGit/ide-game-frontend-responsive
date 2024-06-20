@@ -1,4 +1,4 @@
-import { Icon, Typography, styled } from '@mui/material';
+import { Icon, SvgIcon, Typography, styled } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import React, { CSSProperties, DetailedHTMLProps, HTMLAttributes } from 'react';
@@ -36,7 +36,7 @@ const BaseTilePaper = styled (Paper, {
 interface BaseTileProps {
   size: number,
   elevation?: number,
-  TileIcon?: React.ComponentType<React.ComponentProps<typeof Icon>>,
+  TileIcon?: React.ComponentType<React.ComponentProps<typeof SvgIcon>>,
   onClick?: (event : React.MouseEvent<HTMLInputElement>) => void,
   tooltipComponent?: JSX.Element,
   rarityBorderColor?: RarityType,

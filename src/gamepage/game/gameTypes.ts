@@ -281,6 +281,13 @@ type UpdatedData = {
   activeAction?: ActionObject | null,
   actionQueue?: ActionObject[]
   item?: Item
+  itemId_push?: string
+  itemId_pull?: string
+  equipment?: {
+    profession: ProfessionId
+    equipmentSlot: EquipmentSlot
+    itemId: string | null
+  }
 }
 export type UpdateCharacterMessage = {
   type: 'update_character',
@@ -317,4 +324,11 @@ export type SellResourceMsg = {
   type: 'sell_resource',
   resource: ResourceId,
   amount: number
+}
+
+export type EquipItemMsg = {
+  type: 'equip_item',
+  itemId: string | null,
+  profession: ProfessionId,
+  equipmentSlot: EquipmentSlot
 }

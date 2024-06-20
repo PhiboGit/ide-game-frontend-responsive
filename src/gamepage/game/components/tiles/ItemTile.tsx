@@ -2,19 +2,17 @@ import React from "react";
 
 import BaseTile from "./BaseTile";
 import { Typography } from "@mui/material";
-import useGameData from "../../stateManagement/GameData/useGameData";
 import ItemTooltip from "../tooltips/ItemTooltip";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
 
 interface ItemTileProps {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
   itemId: string
-  enchantingLevel?: number
   size? : number
   elevation?: number
 }
 
-export default function ItemTile({ onClick, itemId, enchantingLevel = 0, size = 3.5, elevation = 1}: ItemTileProps) {
+export default function ItemTile({ onClick, itemId, size = 3.5, elevation = 1}: ItemTileProps) {
   const itemMap = useCharacterState((char) => char.itemMap)
   const item = itemMap[itemId]
   if (!item) {
@@ -43,7 +41,7 @@ export default function ItemTile({ onClick, itemId, enchantingLevel = 0, size = 
         textAlign='start' 
         sx={{ position: 'absolute', top: 0, left: 0, width: '100%', padding: '1.5px 3.5px', textShadow: '1px 1px 1px black'}}
       >
-        {enchantingLevel ? `+${enchantingLevel}` : ''}
+        {item.enchantingLevel ? `+${item.enchantingLevel}` : ''}
       </Typography>
     </BaseTile>
   );

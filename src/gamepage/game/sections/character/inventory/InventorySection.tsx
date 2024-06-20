@@ -5,6 +5,7 @@ import InventoryResourceGridItem from './InventoryResourceGridItem';
 import useCharacterState from '../../../stateManagement/CharacterData/useCharacterData';
 import { ResourceId } from '../../../gameTypes';
 import ItemTile from '../../../components/tiles/ItemTile';
+import InventoryItem from './InventoryItem';
 
 export default function InventorySection() {
   const gold = useCharacterState((char) => char.currency.gold)
@@ -33,7 +34,7 @@ export default function InventorySection() {
       <Grid container spacing={1}>
         {itemIds.map((itemId) => (
           <Grid item key={itemId}>
-            <ItemTile itemId={itemId} />
+            <InventoryItem itemId={itemId}/>
           </Grid>
         ))}
       </Grid>

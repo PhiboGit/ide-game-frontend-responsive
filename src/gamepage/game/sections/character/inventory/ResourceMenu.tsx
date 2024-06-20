@@ -1,5 +1,5 @@
-import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Button, Paper, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { ResourceId, SellResourceMsg } from "../../../gameTypes";
 import websocketService from "../../../../../service/websocketService";
 import useGameDataState from "../../../stateManagement/GameData/useGameData";
@@ -31,6 +31,7 @@ export default function ResourceMenu({ resourceId, closeMenu }: ResourceMenuProp
 
   return (
     <Paper
+      elevation={10}
       sx={{
         p : 1,
         display: 'flex',

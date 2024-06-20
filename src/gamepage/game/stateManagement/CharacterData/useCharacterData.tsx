@@ -126,10 +126,50 @@ function CharacterUpdater() {
 
     if(update.item !== undefined){
       const itemId = update.item._id
+      setCharacterData((prevChar) => {
+        const itemsSet = new Set(...prevChar.items)
+        itemsSet.add(itemId)
+        const items = Array.from(itemsSet)
+        return(
+        { 
+          items: items,
+          itemMap: { ...prevChar.itemMap, [itemId]: update.item }
+        }
+      )})
+    }
+
+    if(update.itemId_pull !== undefined){
+      const itemId = update.itemId_pull
+      setCharacterData((prevChar) => {
+        const itemsSet = new Set(...prevChar.items)
+        itemsSet.delete(itemId)
+        const items = Array.from(itemsSet)
+
+        delete prevChar.itemMap[itemId]
+        return(
+        { 
+          items: items,
+          itemMap: { ...prevChar.itemMap }
+        }
+      )})
+    }
+
+    if(update.equipment !== undefined){
+      const profession = update.equipment.profession
+      const equipmentSlot = update.equipment.equipmentSlot
+      const itemId = update.equipment.itemId
       setCharacterData((prevChar) => (
         { 
-          items: [...prevChar.items, itemId],
-          itemMap: { ...prevChar.itemMap, [itemId]: update.item }
+          professions: { 
+            ...prevChar.professions, // keep the old profession state
+            [profession]: { 
+              ...prevChar.professions[profession], // keep the old profession state
+              equipment: { 
+                ...prevChar.professions[profession].equipment, // keep the old equipment state
+                [equipmentSlot]: itemId // set the new equipment
+              }
+            }
+          },
         }
       ))
     }
