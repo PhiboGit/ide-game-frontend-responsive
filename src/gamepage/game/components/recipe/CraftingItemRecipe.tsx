@@ -1,14 +1,13 @@
-import { Box, Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import { CraftingMsg, Ingredient, ItemRecipe, RarityResourceRecipe, RarityType, ResourceId, ResourceRecipe } from "../../gameTypes";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { CraftingMsg, Ingredient, ItemRecipe, ResourceId } from "../../gameTypes";
 import { useState } from "react";
-import ResourceTile from "../tiles/ResourceTile";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
 import { getLevel } from "../../gameUtils";
-import { getOdds, preSelectIngredients } from "./craftingUtils";
+import { preSelectIngredients } from "./craftingUtils";
 import StartActionController from "../actions/StartActionController";
 import websocketService from "../../../../service/websocketService";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
-import IngredientsSelectors from "./IngredientsSelectors";
+import IngredientSelector from "./IngredientSelector";
 
 
 export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
@@ -86,7 +85,21 @@ export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
         </Grid>
 
         {/* Ingredients */}
-        <IngredientsSelectors recipe={recipe} selectedIngredients={selectedIngredients} onChange={onChangeIngredients}/>
+        <Grid 
+          container
+          justifyContent={"center"}
+          spacing={1}
+        >
+          {recipe.ingredients.map((ingredientSlot, slotIndex) => (
+            <Grid item key={slotIndex}>
+              <IngredientSelector
+                recipeIngredient={ingredientSlot}
+                selectedIngredient={selectedIngredients[slotIndex]}
+                onSelect={(value) => onChangeIngredients(slotIndex, value)}
+              />
+          </Grid>
+          ))}
+        </Grid>
 
         <StartActionController limit={limit} setLimit={setLimit} iterations={iterations} setIterations={setIterations} startDisabled={false} onClickStart={start}/>
       </Box>
