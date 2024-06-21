@@ -6,6 +6,8 @@ import { EquipmentSlot, ProfessionId } from "../../../gameTypes";
 import useCharacterState from "../../../stateManagement/CharacterData/useCharacterData";
 import EquipmentSlotItemMenu from "./EquipmentSlotItemMenu";
 import BaseTile from "../../../components/tiles/BaseTile";
+import { CropFree } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 export default function EquipmentSlotItem({ profession, equipmentSlot }: { profession: ProfessionId, equipmentSlot: EquipmentSlot }) {
 
@@ -24,7 +26,9 @@ export default function EquipmentSlotItem({ profession, equipmentSlot }: { profe
   };
 
   return (
-    <>
+    <Box 
+      sx={{ border: '1px dashed', borderRadius: '4px', p: '2px' }}
+    >
       {itemId ? <ItemTile 
         itemId={itemId} 
         onClick={openPopperItem}
@@ -32,13 +36,12 @@ export default function EquipmentSlotItem({ profession, equipmentSlot }: { profe
       />
       : <BaseTile 
           size={2.5} 
-          iconSizePercent={45}
           onClick={openPopperItem}
       />
       }
       <ClickAwayPopper anchorEl={anchorEl} setAnchorEl={setAnchorEl}>
         <EquipmentSlotItemMenu profession={profession} equipmentSlot={equipmentSlot} closeMenu={closePopper}/>
       </ClickAwayPopper>
-    </>
+    </Box>
   )
 }
