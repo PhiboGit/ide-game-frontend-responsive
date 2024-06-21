@@ -159,6 +159,13 @@ export type Resource = {
 
 export type ResourceData = Record<ResourceId, Resource>
 
+export type RecipeIngredient = {
+  required: boolean
+  slot: {
+    resource: ResourceId
+    amount: number
+  }[]
+}
 
 export type ResourceRecipe = {
   id: string
@@ -171,13 +178,7 @@ export type ResourceRecipe = {
   time: number
   exp: number
   expChar: number
-  ingredients: {
-    required: boolean
-    slot: {
-      resource: ResourceId
-      amount: number
-    }[]
-  }[]
+  ingredients: RecipeIngredient[]
 }
 export type ResourceRecipeData = Record<string, ResourceRecipe>
 
@@ -201,13 +202,7 @@ export type RarityResourceRecipe = {
   time: number
   exp: number
   expChar: number
-  ingredients: {
-    required: boolean
-    slot: {
-      resource: ResourceId
-      amount: number
-    }[]
-  }[]
+  ingredients: RecipeIngredient[]
 }
 export type RarityResourceRecipeData = Record<string, RarityResourceRecipe>
 
@@ -238,13 +233,7 @@ export type ItemRecipe = {
     weight: number
     bonusType: BonusType
   }[]
-  ingredients: {
-    required: boolean
-    slot: {
-      resource: ResourceId
-      amount: number
-    }[]
-  }[]
+  ingredients: RecipeIngredient[]
 }
 export type ItemRecipeData = {[x: string]: ItemRecipe}
 
