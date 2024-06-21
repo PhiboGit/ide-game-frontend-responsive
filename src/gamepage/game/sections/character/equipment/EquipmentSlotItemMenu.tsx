@@ -33,14 +33,13 @@ export default function EquipmentSlotItemMenu({ profession, equipmentSlot, close
   }
 
   return (
-    <Paper
-      elevation={10}
+    <Box
       sx={{
         p : 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '175px'
+        width: '200px'
       }}
     >
       <Grid container spacing={1}>
@@ -62,6 +61,6 @@ export default function EquipmentSlotItemMenu({ profession, equipmentSlot, close
           </Grid>
         ))}
       </Grid>
-    </Paper>
+    </Box>
   )
 }

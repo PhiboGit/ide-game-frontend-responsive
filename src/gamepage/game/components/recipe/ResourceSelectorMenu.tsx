@@ -25,8 +25,7 @@ export default function ResourceSelectorMenu({ values, required, onChange, close
 
 
   return (
-    <Paper
-      elevation={10}
+    <Box
       sx={{
         p : 1,
         display: 'flex',
@@ -54,6 +53,6 @@ export default function ResourceSelectorMenu({ values, required, onChange, close
           </Grid>
         ))}
       </Grid>
-    </Paper>
+    </Box>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { ResourceId, SellResourceMsg } from "../../../gameTypes";
 import websocketService from "../../../../../service/websocketService";
@@ -30,14 +30,14 @@ export default function ResourceMenu({ resourceId, closeMenu }: ResourceMenuProp
   }
 
   return (
-    <Paper
-      elevation={10}
+    <Box
       sx={{
         p : 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '175px'
+        width: '175px',
+        gap: 1
       }}
     >
       <Typography>
@@ -49,6 +49,6 @@ export default function ResourceMenu({ resourceId, closeMenu }: ResourceMenuProp
         onChange={(event) => setSellAmount(parseInt(event.target.value))}
         size='small'/>
       <Button onClick={handleSell} key={"sell"} variant="contained">Sell</Button>
-    </Paper>
+    </Box>
   )
 }
