@@ -38,10 +38,19 @@ export default function ItemTile({ onClick, itemId, size = 3.5, elevation = 1}: 
         lineHeight={.95}
         fontSize={'.75rem'}
         variant="body2"
-        textAlign='start' 
+        textAlign='end' 
         sx={{ position: 'absolute', top: 0, left: 0, width: '100%', padding: '1.5px 3.5px', textShadow: '1px 1px 1px black'}}
       >
         {item.enchantingLevel ? `+${item.enchantingLevel}` : ''}
+      </Typography>
+      <Typography 
+        lineHeight={.95}
+        fontSize={'.75rem'}
+        variant="body2"
+        textAlign='start' 
+        sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: '1.5px 3.5px', textShadow: '1px 1px 1px black'}}
+      >
+        GS: {item.craftedGearScore}
       </Typography>
     </BaseTile>
   );
