@@ -88,7 +88,7 @@ export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
         {/* Ingredients */}
         <IngredientsSelectors recipe={recipe} selectedIngredients={selectedIngredients} onChange={onChangeIngredients}/>
 
-          <StartActionController limit={limit} setLimit={setLimit} iterations={iterations} setIterations={setIterations} startDisabled={false} onClickStart={start}/>
+        <StartActionController limit={limit} setLimit={setLimit} iterations={iterations} setIterations={setIterations} startDisabled={false} onClickStart={start}/>
       </Box>
     </Container>
   )

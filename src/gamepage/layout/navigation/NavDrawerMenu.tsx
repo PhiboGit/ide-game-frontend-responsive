@@ -12,7 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import Typography from '@mui/material/Typography';
-import GatheringSection from '../../game/sections/gathering/GatheringSection';
+import { HarvestingSection, MiningSection, WoodcuttingSection } from '../../game/sections/gathering/GatheringSection';
 import CharacterSection from '../../game/sections/character/CharacterSection';
 import { LogoutButton } from '../../../homepage/home/AuthComponent';
 import { styled } from '@mui/material';
@@ -50,7 +50,7 @@ const ListItemTextMini = styled(ListItemText, {
   display: miniOpen ? 'initial' : 'none',
 }));
 
-type SectionName = "Character" | "Gathering" | "Crafting" | "Woodworking" | "Smelting" | "Weaving" | "Engineer" | "Smith" | "Artificer";
+type SectionName = "Character" | "Woodcutting" | "Mining" | "Harvesting" | "Woodworking" | "Smelting" | "Weaving" | "Engineer" | "Smith" | "Artificer";
 interface Props {
   useSection: () => { mainSection: React.ReactNode, setMainSection: React.Dispatch<React.SetStateAction<React.ReactNode>> };
   miniOpen: boolean;
@@ -59,8 +59,9 @@ interface Props {
 
 const sectionMap: Map<SectionName, React.ComponentType> = new Map([
   ["Character", CharacterSection],
-  ["Gathering", GatheringSection],
-  ["Crafting", CraftingProfessionTabs],
+  ["Woodcutting", WoodcuttingSection],
+  ["Mining", MiningSection],
+  ["Harvesting", HarvestingSection],
   ["Woodworking", WoodworkingSection],
   ["Smelting", SmeltingSection],
   ["Weaving", WeavingSection],
@@ -72,7 +73,7 @@ const sectionMap: Map<SectionName, React.ComponentType> = new Map([
 export default function NavDrawerMenu({ useSection, miniOpen, handleDrawerToggle }: Props) {
 
   const { setMainSection } = useSection();
-  const [sectionName, setSectionName] = useState<SectionName>("Gathering");
+  const [sectionName, setSectionName] = useState<SectionName>("Woodcutting");
 
   useEffect(() => {
     const SectionComponent = sectionMap.get(sectionName);
