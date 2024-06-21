@@ -9,6 +9,7 @@ import StartActionController from "../actions/StartActionController";
 import websocketService from "../../../../service/websocketService";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
 import IngredientsSelectors from "./IngredientsSelectors";
+import ResourceOutputTile from "./ResourceOutputTile";
 
 
 export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityResourceRecipe}) {
@@ -79,7 +80,7 @@ export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityR
           {Object.keys(recipe.resource_rarity).map((key) => (
             <Grid item key={key}>
                 <Box display='flex' alignItems='center' flexDirection={'column'}>
-                    <ResourceTile size={3} elevation={0} resourceId={recipe.resource_rarity[key as RarityType]!} count={recipe.amount}/>
+                    <ResourceOutputTile resourceId={recipe.resource_rarity[key as RarityType]!} amount={recipe.amount}/>
                     <Typography fontSize='.66rem' color={'text.secondary'}>{getOdds(recipe, key as RarityType, 0).toFixed(2)}%</Typography>
                 </Box>
             </Grid>

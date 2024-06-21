@@ -9,6 +9,7 @@ import StartActionController from "../actions/StartActionController";
 import websocketService from "../../../../service/websocketService";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
 import IngredientsSelectors from "./IngredientsSelectors";
+import ResourceOutputTile from "./ResourceOutputTile";
 
 
 export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe}) {
@@ -77,7 +78,7 @@ export default function CraftingResourceRecipe({recipe}: {recipe: ResourceRecipe
         >
           
           <Grid item>
-            <ResourceTile size={3} elevation={0} resourceId={recipe.resource} count={recipe.amount}/>
+            <ResourceOutputTile resourceId={recipe.resource} amount={recipe.amount}/>
           </Grid>
         </Grid>
 

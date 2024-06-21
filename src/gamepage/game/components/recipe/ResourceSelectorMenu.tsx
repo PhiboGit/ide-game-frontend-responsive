@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { Ingredient, ResourceId } from "../../gameTypes";
 import BaseTile from "../tiles/BaseTile";
 import ResourceTile from "../tiles/ResourceTile";
+import ResourceIngredientTile from "./ResourceIngredientTile";
 
 
 
 
 interface ResourceSelectorMenuProps { 
-  values: ResourceId[]
+  values: { resource: ResourceId, amount: number }[]
   required: boolean
   onChange: (value: Ingredient) => void
   closeMenu: () => void 
@@ -31,24 +32,25 @@ export default function ResourceSelectorMenu({ values, required, onChange, close
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '175px'
+        width: '265px'
       }}
     >
       <Grid container spacing={1}>
         { !required && <Grid item key={'empty'}>
           <BaseTile 
-            size={2.5}
+            size={3.5}
             elevation={1}
             TileIcon={BlockIcon}
             onClick={() => handleChange('empty')}            
           />
         </Grid>}
-        {values.map((resourceId) => (
-          <Grid item key={resourceId}>
-            <ResourceTile 
-              size={2.5}
-              onClick={() => handleChange(resourceId)}
-              resourceId={resourceId}
+        {values.map(({resource, amount}) => (
+          <Grid item key={resource}>
+            <ResourceIngredientTile
+              size={3.5} 
+              resourceId={resource}
+              amount={amount}
+              onClick={() => handleChange(resource)}
             />
           </Grid>
         ))}
