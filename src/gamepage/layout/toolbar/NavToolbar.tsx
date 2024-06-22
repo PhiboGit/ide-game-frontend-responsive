@@ -9,6 +9,7 @@ import ActionProgress from '../../game/components/actions/ActionProgress';
 import CharacterName from '../../game/components/stats/CharacterName';
 import LevelCharacter from '../../game/components/stats/LevelCharacter';
 import useServerData from '../../game/stateManagement/serverData/useServerData';
+import ActionQueue from '../../game/components/actions/ActionQueue';
 
 
 
@@ -18,8 +19,9 @@ export default function NavToolbar() {
     <Toolbar>
         <AcUnitIcon color='primary' fontSize='large' sx={{ display: { xs: "none", sm: "block"} }}/>
         <Typography noWrap variant="h4" sx={{ ml: ".5rem", display: { xs: "none", md: "block"} }}>My Idle Game</Typography>
-        <Box sx={{ mx: "auto" }}>
+        <Box display={"flex"} alignItems={"center"} gap={2} sx={{ mx: 'auto' }} >
           <ActionProgress />
+          <ActionQueue />
         </Box>
         <Box display="flex" flexDirection={"column"} sx={{ display: { xs: "none", sm: "block"} }}>
           <Typography noWrap variant='body2'>Active Players: {activePlayers}</Typography>

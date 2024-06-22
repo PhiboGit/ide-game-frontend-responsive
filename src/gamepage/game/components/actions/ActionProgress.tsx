@@ -6,6 +6,7 @@ import { ActionObject, CancelActionMsg } from "../../gameTypes";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
 import websocketService from "../../../../service/websocketService";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
+import { getActionName } from "./actionUtils";
 
 
 function getDisplayTime(millisec: number): string {
@@ -84,35 +85,14 @@ function ActionProgressText({activeAction}: {activeAction: ActionObject | null})
     if (!activeAction){
       return ''
     }
-    if ('node' in activeAction.actionMsg.args) {
-      const node = activeAction.actionMsg.args.node
-      return gameData.gatheringNodeData[node].profession
-    }
-
-    if ('recipe' in activeAction.actionMsg.args) {
-      const recipeId = activeAction.actionMsg.args.recipe
-      const recipe = gameData.resourceRecipeData[recipeId] || gameData.rarityResourceRecipeData[recipeId] || gameData.itemRecipeData[recipeId]
-      return recipe.profession
-    }
-    return 'profession_name'
+    return getActionName(activeAction).profession
   }
 
   const displayActionText = () => {
     if (!activeAction){
       return 'No Action'
     }
-    if ('node' in activeAction.actionMsg.args) {
-      const node = activeAction.actionMsg.args.node
-      return gameData.gatheringNodeData[node].displayName
-    }
-
-    if ('recipe' in activeAction.actionMsg.args) {
-      const recipeId = activeAction.actionMsg.args.recipe
-      const recipe = gameData.resourceRecipeData[recipeId] || gameData.rarityResourceRecipeData[recipeId] || gameData.itemRecipeData[recipeId]
-      return recipe.displayName
-    }
-
-    return 'action_name'
+    return getActionName(activeAction).action
   }
 
   const displayCounterText = () => {
