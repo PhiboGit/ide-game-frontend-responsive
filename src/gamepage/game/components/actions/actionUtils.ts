@@ -1,8 +1,9 @@
 import { ActionObject } from "../../gameTypes";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
 
-export function getActionName(actionObject: ActionObject): { profession: string, action: string } {
+export function getActionName(actionObject: ActionObject | null): { profession: string, action: string } {
   const gameData = useGameDataState((data) => data)
+  if (!actionObject) return { profession: '', action: 'No Action' }
 
   let profession = 'profession_name'
   if ('node' in actionObject.actionMsg.args) {

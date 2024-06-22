@@ -77,23 +77,9 @@ export default function ActionProgress() {
 }
 
 function ActionProgressText({activeAction}: {activeAction: ActionObject | null}) {
-  const gameData = useGameDataState((state) => state)
 
   const counter = activeAction?.counter ?? 0
-
-  const displayProfessionText = () => {
-    if (!activeAction){
-      return ''
-    }
-    return getActionName(activeAction).profession
-  }
-
-  const displayActionText = () => {
-    if (!activeAction){
-      return 'No Action'
-    }
-    return getActionName(activeAction).action
-  }
+  const actionName = getActionName(activeAction)
 
   const displayCounterText = () => {
     if (!activeAction){
@@ -116,12 +102,12 @@ function ActionProgressText({activeAction}: {activeAction: ActionObject | null})
         noWrap 
         textTransform='capitalize'
       >
-        {displayProfessionText()}
+        {actionName.profession}
       </Typography>
       <Typography
         noWrap 
       >
-        {displayActionText()}
+        {actionName.action}
       </Typography>
     </Box>
   )
