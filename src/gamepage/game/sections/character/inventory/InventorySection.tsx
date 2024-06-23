@@ -11,8 +11,8 @@ export default function InventorySection() {
   const gold = useCharacterState((char) => char.currency.gold)
   const resources = useCharacterState((char) => char.resources)
   const characterResources = Object.keys(resources) as ResourceId[]
-  const itemIds = useCharacterState((char) => char.items)
   const itemMap = useCharacterState((char) => char.itemMap)
+  const itemIds = Object.keys(itemMap)
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -31,7 +31,7 @@ export default function InventorySection() {
       </Grid>
       <Divider sx={{my: 2}}/>
       <Typography variant="h6"  mb={1}>Items:</Typography>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} key={itemIds.length}>
         {itemIds.map((itemId) => (
           <Grid item key={itemId}>
             <InventoryItem itemId={itemId}/>

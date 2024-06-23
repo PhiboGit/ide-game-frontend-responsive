@@ -54,6 +54,7 @@ export const bonusTypes = [
   "speed_woodcutting", "exp_woodcutting", "luck_woodcutting", "yieldMin_woodcutting", "yieldMax_woodcutting",
 ] as const
 export type BonusType = typeof bonusTypes[number]
+export type BonusTypePrefix = "con" | "int" | "str" | "dex" | "foc" | "speed" | "exp" | "luck" | "yieldMin" | "yieldMax"
 
 export const rarities = ["none", "common", "uncommon", "rare", "epic", "legendary"] as const
 export type RarityType = typeof rarities[number]
@@ -110,14 +111,14 @@ export type Item = {
   enchantingLevel: number;
   craftedGearScore: number;
 
-  baseStats: {
+  baseStats?: {
     speed?: number;
     armor?: number;
     attack?: number;
     attackSpeed?: number;
   }
 
-  bonusTypes: Partial<{[key in BonusType]: number}>
+  bonusTypes?: Partial<{[key in BonusType]: number}>
 }
 
 
@@ -237,6 +238,62 @@ export type ItemRecipe = {
 }
 export type ItemRecipeData = {[x: string]: ItemRecipe}
 
+export type ItemConverterData = {
+  maxGearScoreStat: number;
+  gearScoreConverter: {
+    exp: {
+      "integer/float": "float",
+      min: number;
+      max: number;
+    },
+    speed: {
+      "integer/float": "float",
+      min: number;
+      max: number;
+    },
+    luck: {
+      "integer/float": "integer",
+      min: number;
+      max: number;
+    },
+    yieldMin: {
+      "integer/float": "float",
+      min: number;
+      max: number;
+    },
+    yieldMax: {
+      "integer/float": "float",
+      min: number;
+      max: number;
+    },
+
+    str: {
+      "integer/float": "integer",
+      min: number;
+      max: number;
+    },
+    dex: {
+      "integer/float": "integer",
+      min: number;
+      max: number;
+    },
+    int: {
+      "integer/float": "integer",
+      min: number;
+      max: number;
+    },
+    con: {
+      "integer/float": "integer",
+      min: number;
+      max: number;
+    },
+    foc: {
+      "integer/float": "integer",
+      min: number;
+      max: number;
+    }
+  }
+}
 
 // messages types incoming
 
@@ -247,7 +304,8 @@ export type InitGameMessage = {
   resourceRecipeData: ResourceRecipeData,
   rarityResourceRecipeData: RarityResourceRecipeData,
   itemRecipeData: ItemRecipeData,
-  expTableData: ExpTableData
+  expTableData: ExpTableData,
+  itemConverterData: ItemConverterData
 }
 
 export type InitStatusMessage = {

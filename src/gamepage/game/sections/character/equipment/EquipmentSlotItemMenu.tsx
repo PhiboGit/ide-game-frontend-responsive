@@ -16,10 +16,9 @@ interface ItemMenuProps {
 }
 
 export default function EquipmentSlotItemMenu({ profession, equipmentSlot, closeMenu }: ItemMenuProps) {
-  const items = useCharacterState((char) => char.items)
   const itemMap = useCharacterState((char) => char.itemMap)
 
-  const validItems = items.filter(itemId => itemMap[itemId].equipmentProfessions.includes(profession) && itemMap[itemId].equipmentSlot === equipmentSlot)
+  const validItems = Object.keys(itemMap).filter(itemId => itemMap[itemId].equipmentProfessions.includes(profession) && itemMap[itemId].equipmentSlot === equipmentSlot)
 
   const handleEquip = (itemId: string | null) => {
     const msg: EquipItemMsg = {

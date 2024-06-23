@@ -1,3 +1,4 @@
+import { BonusTypePrefix } from "./gameTypes";
 import useGameDataState from "./stateManagement/GameData/useGameData";
 
 export function getLevel(exp: number): number {
@@ -22,3 +23,17 @@ export function getLevelProgress(exp: number) {
     const progress = (exp - expTableData.exp[level]) / (nextLevelExp - expTableData.exp[level]) * 100
     return {progress, levelUpInExp: nextLevelExp - exp}
 }
+
+export function convertGearScore(key: BonusTypePrefix, gearScore: number) {
+    const {itemConverterData} = useGameDataState((data) => data)
+
+    const percentage = (gearScore / itemConverterData.maxGearScoreStat)
+    const min = itemConverterData.gearScoreConverter[key].min
+    const max = itemConverterData.gearScoreConverter[key].max
+  
+    const value = min + (max - min) * percentage
+    if (itemConverterData.gearScoreConverter[key]["integer/float"] === "integer") {
+      return Math.floor(value)
+    } else 
+      return value
+  }
