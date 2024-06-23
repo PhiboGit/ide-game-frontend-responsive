@@ -12,7 +12,7 @@ export default function ResourceTooltip({resourceId}: {resourceId: ResourceId}) 
       <Typography fontSize='.8rem' color='text.secondary'>{resource.description}</Typography>
       <Box display='flex' gap={.5} >
         {resource.tier > 0 && <Typography fontSize='.66rem' >T{resource.tier}</Typography>}
-        <Typography fontSize='.66rem' >{resource.rarity !== "none" ? resource.rarity : ""}</Typography>
+        <Typography fontSize='.66rem' color={`${resource.rarity}Rarity`}>{resource.rarity !== "none" ? resource.rarity : ""}</Typography>
       </Box>
       <Typography fontSize='.66rem' >Sell Price: {resource.sellValue}</Typography>
     </Box>
