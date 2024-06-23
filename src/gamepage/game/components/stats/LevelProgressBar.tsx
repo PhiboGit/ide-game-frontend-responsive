@@ -34,7 +34,7 @@ export default function LevelProgressBar({progress, levelUpInExp}:  {progress: n
           paddingRight=".3rem"
         >
           <Typography fontSize='.75rem'>
-            {levelUpInExp}Exp
+            {Math.floor(levelUpInExp)}Exp
           </Typography>
           <Typography 
             fontSize='.75rem'
