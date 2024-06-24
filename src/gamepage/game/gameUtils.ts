@@ -26,14 +26,21 @@ export function getLevelProgress(exp: number) {
 
 export function convertGearScore(key: BonusTypePrefix, gearScore: number) {
     const {itemConverterData} = useGameDataState((data) => data)
-
-    const percentage = (gearScore / itemConverterData.maxGearScoreStat)
+    if(gearScore === 0) return 0
+    const maxGearScoreStat = itemConverterData.maxGearScoreStat
     const min = itemConverterData.gearScoreConverter[key].min
     const max = itemConverterData.gearScoreConverter[key].max
+    const absGearScore = Math.abs(gearScore);
+    const sign = Math.sign(gearScore) === -1 ? itemConverterData.negativeMutiplier : 1;
   
-    const value = min + (max - min) * percentage
+    // Normalize absGearScore to a range between 0 and 1
+    const normalizedScore = absGearScore / maxGearScoreStat;
+  
+    // Scale it to the desired range and apply the sign
+    const scaledScore = sign * (min + (normalizedScore * (max - min)));
+  
     if (itemConverterData.gearScoreConverter[key]["integer/float"] === "integer") {
-      return Math.floor(value)
+      return Math.floor(scaledScore)
     } else 
-      return value
+      return scaledScore
   }

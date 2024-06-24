@@ -240,6 +240,7 @@ export type ItemRecipeData = {[x: string]: ItemRecipe}
 
 export type ItemConverterData = {
   maxGearScoreStat: number;
+  negativeMutiplier: number;
   gearScoreConverter: {
     exp: {
       "integer/float": "float",
