@@ -22,6 +22,8 @@ export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
   const character = useCharacterState((char) => char)
   const professionLevel = getLevel(character.professions[recipe.profession].exp)
 
+  const gearScoreBonus = selectedIngredients.reduce((acc, ing) => acc + (resourceData[ing as ResourceId]?.craftingBonus ?? 0), 0)
+
   const [limit, setLimit] = useState<boolean>(false)
   const [iterations, setIterations] = useState<number>(1)
 
@@ -68,11 +70,11 @@ export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
         </Box>
         {/* Output */}
         <Typography variant="body1">
-          GearScore: roll 100 + baseGearScore:{recipe.baseGearScore} + 0.1*level  + craftingBonus 
+          GearScore: [{Math.floor(professionLevel * 0.1) + recipe.baseGearScore + gearScoreBonus},{Math.floor(professionLevel * 0.1) + recipe.baseGearScore + gearScoreBonus + 100}]
           <br/>
           #Bonus: gearScore breakpoints: 100, 250, 450, 700
           <br/>
-          {JSON.stringify(recipe.availableBoni)}
+          rarity: breakpoints: 0 = common, 60 = uncommon, 120 = rare, 180 = epic, 240 = legendary
         </Typography>
         <Grid
           container
