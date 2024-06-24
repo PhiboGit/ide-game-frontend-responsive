@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
+import { convertGearScore } from "../../gameUtils";
 
 export default function ItemTooltip({itemId}: {itemId: string}) {
     const itemMap = useCharacterState((char) => char.itemMap)
@@ -30,25 +31,25 @@ export default function ItemTooltip({itemId}: {itemId: string}) {
       {item.bonusTypes?.dex !== undefined && <Typography fontSize='.66rem' >Dex: {item.bonusTypes.dex}</Typography>}
       {item.bonusTypes?.foc !== undefined && <Typography fontSize='.66rem' >Foc: {item.bonusTypes.foc}</Typography>}
 
-      {item.bonusTypes?.exp_harvesting !== undefined && <Typography fontSize='.66rem' >Exp. Harvesting: {item.bonusTypes.exp_harvesting}</Typography>}
-      {item.bonusTypes?.exp_woodcutting !== undefined && <Typography fontSize='.66rem' >Exp. Woodcutting: {item.bonusTypes.exp_woodcutting}</Typography>}
-      {item.bonusTypes?.exp_mining !== undefined && <Typography fontSize='.66rem' >Exp. Mining: {item.bonusTypes.exp_mining}</Typography>}
+      {item.bonusTypes?.exp_harvesting !== undefined && <Typography fontSize='.66rem' >Exp. Harvesting: {item.bonusTypes.exp_harvesting} ({convertGearScore('exp' ,item.bonusTypes.exp_harvesting *100).toFixed(2)}%)</Typography>}
+      {item.bonusTypes?.exp_woodcutting !== undefined && <Typography fontSize='.66rem' >Exp. Woodcutting: {item.bonusTypes.exp_woodcutting} ({convertGearScore('exp' ,item.bonusTypes.exp_woodcutting *100).toFixed(2)}%)</Typography>}
+      {item.bonusTypes?.exp_mining !== undefined && <Typography fontSize='.66rem' >Exp. Mining: {item.bonusTypes.exp_mining} ({convertGearScore('exp' ,item.bonusTypes.exp_mining *100).toFixed(2)}%)</Typography>}
 
-      {item.bonusTypes?.luck_harvesting !== undefined && <Typography fontSize='.66rem' >Luck. Harvesting: {item.bonusTypes.luck_harvesting}</Typography>}
-      {item.bonusTypes?.luck_woodcutting !== undefined && <Typography fontSize='.66rem' >Luck. Woodcutting: {item.bonusTypes.luck_woodcutting}</Typography>}
-      {item.bonusTypes?.luck_mining !== undefined && <Typography fontSize='.66rem' >Luck. Mining: {item.bonusTypes.luck_mining}</Typography>}
+      {item.bonusTypes?.luck_harvesting !== undefined && <Typography fontSize='.66rem' >Luck. Harvesting: {item.bonusTypes.luck_harvesting} (+{convertGearScore('luck' ,item.bonusTypes.luck_harvesting)})</Typography>}
+      {item.bonusTypes?.luck_woodcutting !== undefined && <Typography fontSize='.66rem' >Luck. Woodcutting: {item.bonusTypes.luck_woodcutting} (+{convertGearScore('luck' ,item.bonusTypes.luck_woodcutting)})</Typography>}
+      {item.bonusTypes?.luck_mining !== undefined && <Typography fontSize='.66rem' >Luck. Mining: {item.bonusTypes.luck_mining} (+{convertGearScore('luck' ,item.bonusTypes.luck_mining)})</Typography>}
 
-      {item.bonusTypes?.speed_harvesting !== undefined && <Typography fontSize='.66rem' >Speed. Harvesting: {item.bonusTypes.speed_harvesting}</Typography>}
-      {item.bonusTypes?.speed_woodcutting !== undefined && <Typography fontSize='.66rem' >Speed. Woodcutting: {item.bonusTypes.speed_woodcutting}</Typography>}
-      {item.bonusTypes?.speed_mining !== undefined && <Typography fontSize='.66rem' >Speed. Mining: {item.bonusTypes.speed_mining}</Typography>}
+      {item.bonusTypes?.speed_harvesting !== undefined && <Typography fontSize='.66rem' >Speed. Harvesting: {item.bonusTypes.speed_harvesting} ({convertGearScore('speed' ,item.bonusTypes.speed_harvesting *100).toFixed(2)}%)</Typography>}
+      {item.bonusTypes?.speed_woodcutting !== undefined && <Typography fontSize='.66rem' >Speed. Woodcutting: {item.bonusTypes.speed_woodcutting} ({convertGearScore('speed' ,item.bonusTypes.speed_woodcutting *100).toFixed(2)}%)</Typography>}
+      {item.bonusTypes?.speed_mining !== undefined && <Typography fontSize='.66rem' >Speed. Mining: {item.bonusTypes.speed_mining} ({convertGearScore('speed' ,item.bonusTypes.speed_mining *100).toFixed(2)}%)</Typography>}
 
-      {item.bonusTypes?.yieldMin_harvesting !== undefined && <Typography fontSize='.66rem' >Yield Min. Harvesting: {item.bonusTypes.yieldMin_harvesting}</Typography>}
-      {item.bonusTypes?.yieldMin_woodcutting !== undefined && <Typography fontSize='.66rem' >Yield Min. Woodcutting: {item.bonusTypes.yieldMin_woodcutting}</Typography>}
-      {item.bonusTypes?.yieldMin_mining !== undefined && <Typography fontSize='.66rem' >Yield Min. Mining: {item.bonusTypes.yieldMin_mining}</Typography>}
+      {item.bonusTypes?.yieldMin_harvesting !== undefined && <Typography fontSize='.66rem' >Yield Min. Harvesting: {item.bonusTypes.yieldMin_harvesting} (+{convertGearScore('yieldMin' ,item.bonusTypes.yieldMin_harvesting)})</Typography>}
+      {item.bonusTypes?.yieldMin_woodcutting !== undefined && <Typography fontSize='.66rem' >Yield Min. Woodcutting: {item.bonusTypes.yieldMin_woodcutting} (+{convertGearScore('yieldMin' ,item.bonusTypes.yieldMin_woodcutting)})</Typography>}
+      {item.bonusTypes?.yieldMin_mining !== undefined && <Typography fontSize='.66rem' >Yield Min. Mining: {item.bonusTypes.yieldMin_mining} (+{convertGearScore('yieldMin' ,item.bonusTypes.yieldMin_mining)})</Typography>}
 
-      {item.bonusTypes?.yieldMax_harvesting !== undefined && <Typography fontSize='.66rem' >Yield Max. Harvesting: {item.bonusTypes.yieldMax_harvesting}</Typography>}
-      {item.bonusTypes?.yieldMax_woodcutting !== undefined && <Typography fontSize='.66rem' >Yield Max. Woodcutting: {item.bonusTypes.yieldMax_woodcutting}</Typography>}
-      {item.bonusTypes?.yieldMax_mining !== undefined && <Typography fontSize='.66rem' >Yield Max. Mining: {item.bonusTypes.yieldMax_mining}</Typography>}
+      {item.bonusTypes?.yieldMax_harvesting !== undefined && <Typography fontSize='.66rem' >Yield Max. Harvesting: {item.bonusTypes.yieldMax_harvesting} (+{convertGearScore('yieldMax' ,item.bonusTypes.yieldMax_harvesting)})</Typography>}
+      {item.bonusTypes?.yieldMax_woodcutting !== undefined && <Typography fontSize='.66rem' >Yield Max. Woodcutting: {item.bonusTypes.yieldMax_woodcutting} (+{convertGearScore('yieldMax' ,item.bonusTypes.yieldMax_woodcutting)})</Typography>}
+      {item.bonusTypes?.yieldMax_mining !== undefined && <Typography fontSize='.66rem' >Yield Max. Mining: {item.bonusTypes.yieldMax_mining} (+{convertGearScore('yieldMax' ,item.bonusTypes.yieldMax_mining)})</Typography>}
     </Box>
   )
 }
