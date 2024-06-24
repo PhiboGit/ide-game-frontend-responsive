@@ -15,6 +15,9 @@ export default function ResourceTooltip({resourceId}: {resourceId: ResourceId}) 
         <Typography fontSize='.66rem' color={`${resource.rarity}Rarity`}>{resource.rarity !== "none" ? resource.rarity : ""}</Typography>
       </Box>
       <Typography fontSize='.66rem' >Sell Price: {resource.sellValue}</Typography>
+       { resource.bonusType !== undefined && <Typography fontSize='1rem' color={'text.primary'}>Bonus: {resource.bonusType}</Typography>}
+       { resource.gearScoreBonus !== undefined && <Typography fontSize='1rem' color={'text.primary'}>gearScoreBonus: {resource.gearScoreBonus}</Typography>}
+       { resource.craftingBonus !== undefined && <Typography fontSize='1rem' color={'text.primary'}>craftingBonus: {resource.craftingBonus}</Typography>}
     </Box>
   )
 }
