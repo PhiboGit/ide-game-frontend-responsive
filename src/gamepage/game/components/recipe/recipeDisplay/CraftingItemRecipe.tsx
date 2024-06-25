@@ -1,29 +1,35 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { CraftingMsg, Ingredient, RarityResourceRecipe, RarityType, ResourceId } from "../../gameTypes";
+import { CraftingMsg, Ingredient, ItemRecipe, ResourceId } from "../../../gameTypes";
 import { useState } from "react";
-import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
-import { getLevel } from "../../gameUtils";
-import { getOdds, preSelectIngredients } from "./craftingUtils";
-import StartActionController from "../actions/StartActionController";
-import websocketService from "../../../../service/websocketService";
-import useGameDataState from "../../stateManagement/GameData/useGameData";
-import ResourceOutputTile from "./ResourceOutputTile";
-import IngredientSelector from "./IngredientSelector";
+import useCharacterState from "../../../stateManagement/CharacterData/useCharacterData";
+import { getLevel } from "../../../gameUtils";
+import { preSelectIngredients } from "./craftingUtils";
+import StartActionController from "../../actions/StartActionController";
+import websocketService from "../../../../../service/websocketService";
+import useGameDataState from "../../../stateManagement/GameData/useGameData";
+import IngredientSelector from "./ingredientSelector/IngredientSelector";
+import ProfessionLevelTypography from "../../common/ProfessionLevelTypography";
 
 
-export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityResourceRecipe}) {
+export default function CraftingItemRecipe({recipe}: {recipe: ItemRecipe}) {
   const {resourceData} = useGameDataState((data) => data)
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(preSelectIngredients(recipe));
-  console.log(selectedIngredients)
+  function onChangeIngredients(slotIndex: number, value: Ingredient) {
+    const newIngredients = [...selectedIngredients]
+    newIngredients[slotIndex] = value
+    setSelectedIngredients(newIngredients)
+  }
   const character = useCharacterState((char) => char)
   const professionLevel = getLevel(character.professions[recipe.profession].exp)
+
+  const gearScoreBonus = selectedIngredients.reduce((acc, ing) => acc + (resourceData[ing as ResourceId]?.craftingBonus ?? 0), 0)
 
   const [limit, setLimit] = useState<boolean>(false)
   const [iterations, setIterations] = useState<number>(1)
 
   function start(){
     const msg: CraftingMsg = {
-      type: "crafting_rarityResource",
+      type: "crafting_item",
       limit: limit,
       iterations: iterations,
       args: {
@@ -33,12 +39,6 @@ export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityR
     }
 
     websocketService.send(msg)
-  }
-
-  function onChangeIngredients(slotIndex: number, value: Ingredient) {
-    const newIngredients = [...selectedIngredients]
-    newIngredients[slotIndex] = value
-    setSelectedIngredients(newIngredients)
   }
 
   return (
@@ -58,17 +58,19 @@ export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityR
         <Typography  variant="h5">Recipe: {recipe.displayName}</Typography>
         {/* Info */}
         <Box display='flex' gap={2} >
-          <Typography 
-            fontSize='.66rem' 
-            color={professionLevel < recipe.level ? 'error' : 'success'} 
-            textTransform={'capitalize'}>
-              {recipe.profession} Lv. {recipe.level}
-          </Typography>
+          <ProfessionLevelTypography fontSize={'.66rem'} professionId={recipe.profession} requiredLevel={recipe.level}/>
           <Typography fontSize='.66rem' color={'text.secondary'}>{recipe.time}ms</Typography>
           <Typography fontSize='.66rem' color={'text.secondary'}>Exp. {recipe.exp}</Typography>
           <Typography fontSize='.66rem' color={'text.secondary'}>Char. Exp. {recipe.expChar}</Typography>          
         </Box>
         {/* Output */}
+        <Typography variant="body1">
+          GearScore: [{Math.floor(professionLevel * 0.1) + recipe.baseGearScore + gearScoreBonus},{Math.floor(professionLevel * 0.1) + recipe.baseGearScore + gearScoreBonus + 100}]
+          <br/>
+          #Bonus: gearScore breakpoints: 100, 250, 450, 700
+          <br/>
+          rarity: breakpoints: 0 = common, 60 = uncommon, 120 = rare, 180 = epic, 240 = legendary
+        </Typography>
         <Grid
           container
           direction="row"
@@ -76,14 +78,7 @@ export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityR
           alignItems="flex-end"
           gap={1}
         >
-          {Object.keys(recipe.resource_rarity).map((key) => (
-            <Grid item key={key}>
-                <Box display='flex' alignItems='center' flexDirection={'column'}>
-                    <ResourceOutputTile resourceId={recipe.resource_rarity[key as RarityType]!} amount={recipe.amount}/>
-                    <Typography fontSize='.66rem' color={'text.secondary'}>{getOdds(recipe, key as RarityType, 0).toFixed(2)}%</Typography>
-                </Box>
-            </Grid>
-          ))}
+          
         </Grid>
 
         {/* Ingredients */}
@@ -103,8 +98,7 @@ export default function CraftingQualityResourceRecipe({recipe}: {recipe: RarityR
           ))}
         </Grid>
 
-
-          <StartActionController limit={limit} setLimit={setLimit} iterations={iterations} setIterations={setIterations} startDisabled={false} onClickStart={start}/>
+        <StartActionController limit={limit} setLimit={setLimit} iterations={iterations} setIterations={setIterations} startDisabled={false} onClickStart={start}/>
       </Box>
     </Container>
   )

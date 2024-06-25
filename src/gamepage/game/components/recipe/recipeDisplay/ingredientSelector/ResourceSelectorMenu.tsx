@@ -1,10 +1,8 @@
-import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import BlockIcon from '@mui/icons-material/Block';
-import React, { useState } from "react";
-import { Ingredient, ResourceId } from "../../gameTypes";
-import BaseTile from "../tiles/BaseTile";
-import ResourceTile from "../tiles/ResourceTile";
 import ResourceIngredientTile from "./ResourceIngredientTile";
+import { ResourceId, Ingredient } from "../../../../gameTypes";
+import BaseTile from "../../../tiles/BaseTile";
 
 
 

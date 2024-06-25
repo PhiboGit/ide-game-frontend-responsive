@@ -9,6 +9,7 @@ import LevelProgressBar from '../../components/stats/LevelProgressBar';
 import { getLevel, getLevelProgress } from '../../gameUtils';
 import useCharacterState from '../../stateManagement/CharacterData/useCharacterData';
 import { getProfessionNodes } from './gatheringUtils';
+import ProfessionTitle from '../../components/common/ProfessionTitle';
 
 
 export function WoodcuttingSection() {
@@ -35,9 +36,6 @@ function GatheringSection({profession }: {profession: ProfessionId}) {
   const [iterations, setIterations] = useState(1);
   
   const nodes = getProfessionNodes(profession);
-  const professionExp = useCharacterState((char) => char.professions[profession].exp)
-  const {progress, levelUpInExp} = getLevelProgress(professionExp)
-  const level = getLevel(professionExp)
 
   const handleStartClick = () => {
     if (selectedAction === null) {
@@ -59,10 +57,7 @@ function GatheringSection({profession }: {profession: ProfessionId}) {
   return (   
     
       <Box display="flex" flexDirection="column" gap="1rem" alignItems='center' padding='0.5rem 1rem 1rem 1rem'>
-        <Box width='200px' display='flex' flexDirection={'column'} alignSelf={'center'} alignItems='center'>
-          <Typography variant="h5" noWrap textTransform={'capitalize'}>{profession} Lv. {level}</Typography>
-          <LevelProgressBar progress={progress} levelUpInExp={levelUpInExp} />
-        </Box>
+        <ProfessionTitle profession={profession}/>
         <Grid container spacing={2} justifyContent='center'>
           {nodes.map(nodeId => 
             <Grid item key={nodeId} xs='auto'>

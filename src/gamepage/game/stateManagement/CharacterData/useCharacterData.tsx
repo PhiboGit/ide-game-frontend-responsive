@@ -98,14 +98,6 @@ function CharacterUpdater() {
     }
 
     if(update.activeAction !== undefined){
-      console.log("activeAction changed!")
-      // TODO: fix this.
-      // i dont know why i have to set to null first to trigger a re-render/ notify observers
-      setCharacterData((prevChar) => (
-        { 
-          activeAction: null
-        }
-      ))
       const newAction = update.activeAction
       setCharacterData((prevChar) => (
         { 
@@ -127,13 +119,14 @@ function CharacterUpdater() {
     if(update.item !== undefined){
       const itemId = update.item._id
       setCharacterData((prevChar) => {
-        const itemsSet = new Set(...prevChar.items)
+        const itemsSet = new Set(prevChar.items)
         itemsSet.add(itemId)
         const items = Array.from(itemsSet)
+        const itemMap = { ...prevChar.itemMap, [itemId]: update.item! }
         return(
         { 
           items: items,
-          itemMap: { ...prevChar.itemMap, [itemId]: update.item }
+          itemMap: itemMap
         }
       )})
     }
@@ -141,7 +134,7 @@ function CharacterUpdater() {
     if(update.itemId_pull !== undefined){
       const itemId = update.itemId_pull
       setCharacterData((prevChar) => {
-        const itemsSet = new Set(...prevChar.items)
+        const itemsSet = new Set(prevChar.items)
         itemsSet.delete(itemId)
         const items = Array.from(itemsSet)
 

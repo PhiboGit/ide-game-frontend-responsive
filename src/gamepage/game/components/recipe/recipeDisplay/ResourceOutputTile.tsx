@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
-import { ResourceId } from "../../gameTypes";
-import ResourceTile from "../tiles/ResourceTile";
-import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
+import { ResourceId } from "../../../gameTypes";
+import ResourceTile from "../../tiles/ResourceTile";
 
 type ResourceOutputTileProps = {
   resourceId: ResourceId

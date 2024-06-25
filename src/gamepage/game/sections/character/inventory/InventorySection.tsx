@@ -3,16 +3,12 @@ import React from 'react'
 import ResourceTile from '../../../components/tiles/ResourceTile';
 import InventoryResourceGridItem from './InventoryResourceGridItem';
 import useCharacterState from '../../../stateManagement/CharacterData/useCharacterData';
-import { ResourceId } from '../../../gameTypes';
+import { ResourceId, resourceIds } from '../../../gameTypes';
 import ItemTile from '../../../components/tiles/ItemTile';
 import InventoryItem from './InventoryItem';
 
 export default function InventorySection() {
   const gold = useCharacterState((char) => char.currency.gold)
-  const resources = useCharacterState((char) => char.resources)
-  const characterResources = Object.keys(resources) as ResourceId[]
-  const itemMap = useCharacterState((char) => char.itemMap)
-  const itemIds = Object.keys(itemMap)
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -23,16 +19,33 @@ export default function InventorySection() {
           </Grid>
       </Grid>
       <Divider sx={{my: 2}}/>
+      <ResourcesSection/>
+      <Divider sx={{my: 2}}/>
+      <ItemSection/>
+    </div>
+  )
+}
+
+function ResourcesSection() {
+  return (
+    <div >
       <Typography variant="h6" mb={1}>Resources:</Typography>
       <Grid container spacing={1}>
-        {characterResources.map((key) => (
+        {resourceIds.map((key) => (
           <InventoryResourceGridItem resourceId={key} key={key}/>   
         ))}
       </Grid>
-      <Divider sx={{my: 2}}/>
+    </div>
+  )
+}
+
+function ItemSection() {
+  const items = useCharacterState((char) => char.items)
+  return (
+    <div>
       <Typography variant="h6"  mb={1}>Items:</Typography>
-      <Grid container spacing={1} key={itemIds.length}>
-        {itemIds.map((itemId) => (
+      <Grid container spacing={1} key={items.length}>
+        {items.map((itemId) => (
           <Grid item key={itemId}>
             <InventoryItem itemId={itemId}/>
           </Grid>

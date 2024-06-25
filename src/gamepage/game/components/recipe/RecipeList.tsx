@@ -1,8 +1,8 @@
-import { Box, Collapse, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { Box, Collapse, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { ProfessionId } from "../../gameTypes";
 import useGameDataState from "../../stateManagement/GameData/useGameData"
 
-import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import ResourceTile from "../../components/tiles/ResourceTile";
 import { getProfessionRecipes } from "./getProfessionRecipes";

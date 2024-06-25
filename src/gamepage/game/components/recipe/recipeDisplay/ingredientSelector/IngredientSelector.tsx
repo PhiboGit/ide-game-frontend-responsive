@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import { Ingredient, RecipeIngredient, ResourceId } from "../../gameTypes";
-import ClickAwayPopper from "../common/ClickAwayPopper";
+import { Ingredient, RecipeIngredient, ResourceId } from "../../../../gameTypes";
+import ClickAwayPopper from "../../../common/ClickAwayPopper";
 import { useState } from "react";
-import BaseTile from "../tiles/BaseTile";
+import BaseTile from "../../../tiles/BaseTile";
 import ResourceSelectorMenu from "./ResourceSelectorMenu";
 import ResourceIngredientTile from "./ResourceIngredientTile";
 

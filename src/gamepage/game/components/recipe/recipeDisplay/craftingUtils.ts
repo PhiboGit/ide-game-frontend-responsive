@@ -1,4 +1,4 @@
-import { ResourceRecipe, ResourceId, ItemRecipe, RarityResourceRecipe, RarityType, Ingredient } from "../../gameTypes"
+import { ResourceRecipe, ItemRecipe, RarityResourceRecipe, RarityType, Ingredient } from "../../../gameTypes"
 
 export const preSelectIngredients =(recipe: ResourceRecipe | RarityResourceRecipe | ItemRecipe) => {
   const pre: Ingredient[] = []

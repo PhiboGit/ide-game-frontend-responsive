@@ -1,14 +1,12 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { ItemRecipe, ProfessionId, RarityResourceRecipe, ResourceRecipe } from "../../gameTypes";
 import React from "react";
 import RecipeList from "./RecipeList";
 import useGameDataState from "../../stateManagement/GameData/useGameData";
-import CraftingResourceRecipe from "./CraftingResourceRecipe";
-import useCharacterState from "../../stateManagement/CharacterData/useCharacterData";
-import { getLevel, getLevelProgress } from "../../gameUtils";
-import LevelProgressBar from "../stats/LevelProgressBar";
-import CraftingQualityResourceRecipe from "./CraftingQualityResourceRecipe";
-import CraftingItemRecipe from "./CraftingItemRecipe";
+import CraftingResourceRecipe from "./recipeDisplay/CraftingResourceRecipe";
+import CraftingQualityResourceRecipe from "./recipeDisplay/CraftingQualityResourceRecipe";
+import CraftingItemRecipe from "./recipeDisplay/CraftingItemRecipe";
+import ProfessionTitle from "../common/ProfessionTitle";
 
 type SelectedRecipe = {
   recipeType: 'resource' | 'rarityResource' | 'item' | null,
@@ -18,9 +16,6 @@ export default function RecipeSelector({professionId}: {professionId: Profession
   const [selected, setSelected] = React.useState<SelectedRecipe>({recipeType: null, recipeId: null});
 
   const {resourceRecipeData, rarityResourceRecipeData, itemRecipeData} = useGameDataState((data) => data);
-  const professionExp = useCharacterState((char) => char.professions[professionId].exp)
-  const professionLevel = getLevel(professionExp)
-  const {progress, levelUpInExp} = getLevelProgress(professionExp)
   const recipe = getRecipe()
   function getRecipe(): ResourceRecipe | RarityResourceRecipe | ItemRecipe | null {
     if(!selected.recipeId) return null
@@ -44,10 +39,7 @@ export default function RecipeSelector({professionId}: {professionId: Profession
       <RecipeList profession={professionId} onChange={handleSelect}/>
       <Divider orientation="vertical" flexItem/>
       <Box flex={1} display='flex' flexDirection='column' alignItems={'center'} mt='.75rem'>
-        <Box width='200px' display='flex' flexDirection={'column'} alignItems='center'>
-          <Typography variant="h5" noWrap textTransform={'capitalize'}>{professionId} Lv. {professionLevel}</Typography>
-          <LevelProgressBar progress={progress} levelUpInExp={levelUpInExp}/>
-        </Box>
+        <ProfessionTitle profession={professionId}/>
         {(recipe && selected.recipeType === 'resource')  && 
           <CraftingResourceRecipe key={recipe.id} recipe={recipe as ResourceRecipe}/>
         }
