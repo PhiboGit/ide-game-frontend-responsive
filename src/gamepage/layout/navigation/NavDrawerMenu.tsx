@@ -23,6 +23,7 @@ import SmeltingSection from '../../game/sections/crafting/SmeltingSection';
 import SmithSection from '../../game/sections/crafting/SmithSection';
 import WeavingSection from '../../game/sections/crafting/WeavingSection';
 import ArtificerSection from '../../game/sections/crafting/ArtificerSection';
+import MarketplaceSection from '../../game/sections/marketplace/MarketplaceSection';
 
 interface StyledProps {
   miniOpen: boolean;
@@ -50,7 +51,7 @@ const ListItemTextMini = styled(ListItemText, {
   display: miniOpen ? 'initial' : 'none',
 }));
 
-type SectionName = "Character" | "Woodcutting" | "Mining" | "Harvesting" | "Woodworking" | "Smelting" | "Weaving" | "Engineer" | "Smith" | "Artificer";
+type SectionName = "Character" | "Marketplace" | "Woodcutting" | "Mining" | "Harvesting" | "Woodworking" | "Smelting" | "Weaving" | "Engineer" | "Smith" | "Artificer";
 interface Props {
   useSection: () => { mainSection: React.ReactNode, setMainSection: React.Dispatch<React.SetStateAction<React.ReactNode>> };
   miniOpen: boolean;
@@ -59,6 +60,7 @@ interface Props {
 
 const sectionMap: Map<SectionName, React.ComponentType> = new Map([
   ["Character", CharacterSection],
+  ["Marketplace", MarketplaceSection],
   ["Woodcutting", WoodcuttingSection],
   ["Mining", MiningSection],
   ["Harvesting", HarvestingSection],
