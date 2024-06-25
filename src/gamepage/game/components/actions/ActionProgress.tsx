@@ -43,7 +43,7 @@ export default function ActionProgress() {
 
   return (
     // need a width for the progress bar
-    <Box width={"350px"} style={{ position: "relative"}}>
+    <Box width={{ xs:"280px", sm:"380px"}} style={{ position: "relative"}}>
       {/* Progress bar added key to trigger even when totalTime does not change. As counter does change with every action */}
       <ProgressBarTimer key={counter} msTime={totalTime} onTimeLeft={setTimeLeft}/>
       {/* A "hack" to display element over the progress bar
@@ -99,6 +99,7 @@ function ActionProgressText({activeAction}: {activeAction: ActionObject | null})
         {displayCounterText()}
       </Typography>
       <Typography
+        sx={{ display: { xs: "none", sm: "block"} }}
         noWrap 
         textTransform='capitalize'
       >
