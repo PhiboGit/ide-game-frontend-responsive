@@ -1,7 +1,8 @@
-import { InitCharacterMessage, InitGameMessage, InitStatusMessage, UpdateCharacterMessage } from "../game/gameTypes"
+import { InitCharacterMessage, InitGameMessage, InitStatusMessage, ProfessionStatsMessage, UpdateCharacterMessage } from "../game/gameTypes"
 import { validateInitCharacterMessage } from "./validation/messageValidation/initCharacterMessage"
 import { validateInitGameMessage } from "./validation/messageValidation/initGameMessage"
 import { validateInitStatusMessage } from "./validation/messageValidation/initStatusMessage"
+import { validateProfessionStatsMessage } from "./validation/messageValidation/professionStatsMessage"
 import { validateUpdateCharacterMessage } from "./validation/messageValidation/updateCharacterMessage"
 
 type InitSubscriberCallback = (data: {
@@ -18,6 +19,7 @@ export class MessageManager {
   private initCharacterMessage: InitCharacterMessage | null = null
   private initSubscribers: InitSubscriberCallback[] = []
   private updateCharacterSubscribers: UpdateCharacterSubscriberCallback[] = []
+  private professionStatsSubscribers: ((data: ProfessionStatsMessage) => void)[] = []
   onMessage(data: string) {
     const message = JSON.parse(data)
     if (!message) {
@@ -44,6 +46,9 @@ export class MessageManager {
       case 'update_character':
         this.onUpdateCharacterMessage(message)
         break
+      case 'request_professionStats':
+        this.onRequestProfessionStatsMessage(message)
+        break
       default:
         console.log('Invalid message type received:', message)
         break
@@ -51,6 +56,23 @@ export class MessageManager {
 
     this.checkIfAllInitMessagesReceived()
   }
+  onRequestProfessionStatsMessage(message: any) {
+    const professionStatsMessage = validateProfessionStatsMessage(message)
+    if (professionStatsMessage) {
+      this.notifyProfessionStatsSubscribers(professionStatsMessage)
+    }
+  }
+  notifyProfessionStatsSubscribers(professionStatsMessage: ProfessionStatsMessage) {
+    this.professionStatsSubscribers.forEach(callback => callback(professionStatsMessage))
+  }
+
+  subscribeProfessionStats(callback: (data: ProfessionStatsMessage) => void) {
+    this.professionStatsSubscribers.push(callback)
+    return () => {
+      this.professionStatsSubscribers = this.professionStatsSubscribers.filter(subscriber => subscriber !== callback);
+    };
+  }
+
   onUpdateCharacterMessage(message: any) {
     const updateCharacterMessage = validateUpdateCharacterMessage(message)
     if (updateCharacterMessage) {

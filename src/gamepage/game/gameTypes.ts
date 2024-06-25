@@ -72,6 +72,18 @@ export type Profession = {
 
 export type Professions = Record<ProfessionId, Profession>;
 
+export type ProfessionStats = {
+  profession: ProfessionId
+  stats: {
+    level: number
+    luck: number
+    expBonus: number
+    speed: number
+    yieldMin: number
+    yieldMax: number
+  }
+}
+
 export type Character = {
   id: string
   characterName: string
@@ -342,6 +354,10 @@ export type UpdateCharacterMessage = {
   updatedData: UpdatedData
 }
 
+export type ProfessionStatsMessage = {
+  type: 'request_professionStats',
+} & ProfessionStats
+
 // messages types outgoing
 
 export type GatheringMsg = {
@@ -379,4 +395,9 @@ export type EquipItemMsg = {
   itemId: string | null,
   profession: ProfessionId,
   equipmentSlot: EquipmentSlot
+}
+
+export type RequestProfessionStatsMsg = {
+  type: 'request_professionStats',
+  profession: ProfessionId
 }
