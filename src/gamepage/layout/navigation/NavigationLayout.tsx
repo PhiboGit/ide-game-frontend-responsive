@@ -99,9 +99,10 @@ export default function NavigationLayout({appbarHeight}: {appbarHeight: number})
       </Box>
       <Divider orientation='vertical'/>
       <Box 
+        display={'flex'}
         component="main"
         flex={1} // take all space that is not used by nav and side(Character section)
-        sx={{ overflow: 'auto',  }}
+        sx={{ overflow: 'hidden',  }}
       >
             {mainSection}
       </Box>

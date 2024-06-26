@@ -1,5 +1,7 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
+import InventorySection from "../character/inventory/InventorySection";
+import ResourceMarketplace from "./resourcesMarketplace/ResourceMarketplace";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -11,7 +13,10 @@ function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
+      display={value === index ? 'flex' : 'none'}
+      overflow= 'hidden'
+      flex={1}
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -19,11 +24,11 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <div>
+        <Box display={'flex'} flex={1} overflow= 'hidden'>
           {children}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -42,7 +47,7 @@ export default function MarketplaceSection() {
   };
 
   return (
-    <Box display={'block'} sx={{ width: '100%' }}>
+    <Box display={'flex'} flexDirection={'column'} flex={1} overflow= 'hidden'>
       <Box display={'flex'} justifyContent={'center'}>
         <Typography variant="h4">Marketplace</Typography>
       </Box>
@@ -74,9 +79,9 @@ export default function MarketplaceSection() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Resources
+        <ResourceMarketplace />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={value} index={1} >
         Items
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
