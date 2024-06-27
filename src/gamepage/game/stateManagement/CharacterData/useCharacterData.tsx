@@ -46,7 +46,7 @@ function CharacterUpdater() {
   }, []);
 
   function updateCharacter(updateCharacterMessage: UpdateCharacterMessage) {
-    const update = updateCharacterMessage.updatedData
+    const update = updateCharacterMessage.update
     
     if(update.resources !== undefined){
       Object.entries(update.resources).forEach(([resourceId, amount]) => {
@@ -116,13 +116,13 @@ function CharacterUpdater() {
       ))
     }
 
-    if(update.item !== undefined){
-      const itemId = update.item._id
+    if(update.updateItem !== undefined){
+      const itemId = update.updateItem._id
       setCharacterData((prevChar) => {
         const itemsSet = new Set(prevChar.items)
         itemsSet.add(itemId)
         const items = Array.from(itemsSet)
-        const itemMap = { ...prevChar.itemMap, [itemId]: update.item! }
+        const itemMap = { ...prevChar.itemMap, [itemId]: update.updateItem! }
         return(
         { 
           items: items,
@@ -131,8 +131,8 @@ function CharacterUpdater() {
       )})
     }
 
-    if(update.itemId_pull !== undefined){
-      const itemId = update.itemId_pull
+    if(update.removeItem !== undefined){
+      const itemId = update.removeItem
       setCharacterData((prevChar) => {
         const itemsSet = new Set(prevChar.items)
         itemsSet.delete(itemId)

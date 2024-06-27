@@ -332,7 +332,7 @@ export type InitCharacterMessage = {
   character: Character
 }
 
-type UpdatedData = {
+type CharacterUpdate = {
   characterName: string,
   resources?: Partial<Resources>,
   experiences?: Partial<Record<ProfessionId, number>>,
@@ -340,9 +340,8 @@ type UpdatedData = {
   currency?: Partial<Currency>
   activeAction?: ActionObject | null,
   actionQueue?: ActionObject[]
-  item?: Item
-  itemId_push?: string
-  itemId_pull?: string
+  updateItem?: Item
+  removeItem?: string
   equipment?: {
     profession: ProfessionId
     equipmentSlot: EquipmentSlot
@@ -351,7 +350,7 @@ type UpdatedData = {
 }
 export type UpdateCharacterMessage = {
   type: 'update_character',
-  updatedData: UpdatedData
+  update: CharacterUpdate
 }
 
 export type ProfessionStatsMessage = {
